@@ -6,15 +6,17 @@ import { useEffect } from 'react'
 export default function Home() {
   useEffect(() => {
     // Custom cursor
-    const cursor = document.getElementById('cursor')
-    const cursorRing = document.getElementById('cursorRing')
+    const cursor = document.getElementById('cursor') as HTMLElement | null
+    const cursorRing = document.getElementById('cursorRing') as HTMLElement | null
     if (!cursor || !cursorRing) return
+    const ring = cursorRing
+    const dot = cursor
 
     let mouseX = 0, mouseY = 0
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX; mouseY = e.clientY
-      cursor.style.left = mouseX + 'px'
-      cursor.style.top = mouseY + 'px'
+      dot.style.left = mouseX + 'px'
+      dot.style.top = mouseY + 'px'
     }
     document.addEventListener('mousemove', onMouseMove)
 
@@ -23,20 +25,20 @@ export default function Home() {
     function animateRing() {
       ringX += (mouseX - ringX) * 0.12
       ringY += (mouseY - ringY) * 0.12
-      cursorRing.style.left = ringX + 'px'
-      cursorRing.style.top = ringY + 'px'
+      ring.style.left = ringX + 'px'
+      ring.style.top = ringY + 'px'
       rafId = requestAnimationFrame(animateRing)
     }
     animateRing()
 
     const interactiveEls = document.querySelectorAll('a, button, label')
     const onEnter = () => {
-      cursor.classList.add('expanded')
-      cursorRing.classList.add('expanded')
+      dot.classList.add('expanded')
+      ring.classList.add('expanded')
     }
     const onLeave = () => {
-      cursor.classList.remove('expanded')
-      cursorRing.classList.remove('expanded')
+      dot.classList.remove('expanded')
+      ring.classList.remove('expanded')
     }
     interactiveEls.forEach(el => {
       el.addEventListener('mouseenter', onEnter)
