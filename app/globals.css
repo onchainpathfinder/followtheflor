@@ -69,6 +69,8 @@ body::before {
 }
 .nav-links a:hover { color: var(--white); }
 .nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: var(--white); }
+.nav-links a.active::after { width: 100%; }
 .nav-btn {
   font-size: 0.7rem; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase;
@@ -570,4 +572,223 @@ body::before {
   .nl-btn { width: 100%; }
   .footer-grid { grid-template-columns: 1fr; text-align: center; }
   .footer-socials { justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════ */
+/* ── PILLAR PAGES ──                             */
+/* ═══════════════════════════════════════════════ */
+
+.pillar-page { --accent: var(--pink); }
+.pillar-page--onchain  { --accent: var(--pink); }
+.pillar-page--runs     { --accent: var(--cyan); }
+.pillar-page--explores { --accent: var(--yellow); }
+
+/* Pillar accent overrides */
+.pillar-page .nav-btn { background: var(--accent); }
+.pillar-page .nav-btn:hover { background: var(--white); }
+.pillar-page .nav-links a.active::after { background: var(--accent); }
+.pillar-page .nl-eyebrow { color: var(--accent); }
+.pillar-page .nl-headline em { color: var(--accent); }
+.pillar-page .nl-btn { background: var(--accent); }
+.pillar-page .nl-btn:hover { background: var(--white); }
+.pillar-page .nl-input:focus { border-color: var(--accent); }
+.pillar-page .nl-tag:hover { border-color: var(--accent); color: var(--accent); }
+.pillar-page .nl-tag input { accent-color: var(--accent); }
+.pillar-page .newsletter { border-color: rgba(245,245,245,0.08); }
+
+/* ── PILLAR HERO ── */
+.pillar-hero {
+  min-height: 85vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8rem 5vw 4rem;
+  position: relative;
+  overflow: hidden;
+  gap: 3rem;
+}
+.pillar-hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--black) 0%, var(--dark) 40%, var(--mid) 100%);
+  z-index: 0;
+}
+.pillar-hero-content {
+  position: relative; z-index: 1;
+  max-width: 600px;
+}
+.pillar-hero-eyebrow {
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0; animation: up 0.6s ease 0.2s forwards;
+}
+.pillar-hero-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+}
+.pillar-hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 900; line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: up 0.7s ease 0.35s forwards;
+}
+.pillar-hero-sub {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 300; line-height: 1.7;
+  color: var(--white-60);
+  max-width: 480px;
+  opacity: 0; animation: up 0.7s ease 0.5s forwards;
+}
+.pillar-hero-image {
+  position: relative; z-index: 1;
+  width: 100%; height: 480px;
+  overflow: hidden;
+  opacity: 0; animation: fadeIn 1s ease 0.8s forwards;
+}
+.pillar-hero-img {
+  object-fit: cover; object-position: center center;
+  filter: grayscale(20%);
+  transition: filter 0.4s;
+}
+.pillar-hero-image:hover .pillar-hero-img { filter: grayscale(0%); }
+
+/* Accent bar on hero image */
+.pillar-hero-image::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--accent); z-index: 1;
+}
+
+/* ── PILLAR TOPICS ── */
+.pillar-topics {
+  padding: 6rem 5vw;
+  background: var(--dark);
+}
+.pillar-topics-eyebrow {
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); text-align: center;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.pillar-topics-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900; text-align: center;
+  margin-bottom: 3rem; color: var(--white);
+}
+.pillar-topics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 900px; margin: 0 auto;
+}
+.pillar-topic-card {
+  background: var(--mid);
+  padding: 2.5rem;
+  border: 1px solid rgba(245,245,245,0.06);
+  transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+  position: relative;
+}
+.pillar-topic-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  border-color: rgba(245,245,245,0.12);
+}
+.pillar-topic-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+  color: var(--accent);
+  opacity: 0.3;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+.pillar-topic-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+.pillar-topic-desc {
+  font-size: 0.92rem; font-weight: 300;
+  line-height: 1.65; color: var(--white-60);
+}
+
+/* ── PILLAR FEATURED / COMING SOON ── */
+.pillar-featured {
+  padding: 6rem 5vw;
+  text-align: center;
+}
+.pillar-featured-eyebrow {
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.pillar-featured-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900;
+  margin-bottom: 1.5rem; color: var(--white);
+}
+.pillar-featured-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px; margin: 0 auto;
+}
+.pillar-featured-card {
+  background: var(--mid);
+  border: 1px solid rgba(245,245,245,0.06);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-featured-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--accent); opacity: 0.4;
+}
+.pillar-featured-tag {
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.8rem;
+  display: block;
+}
+.pillar-featured-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--white); margin-bottom: 0.6rem;
+}
+.pillar-featured-desc {
+  font-size: 0.85rem; font-weight: 300;
+  color: var(--white-40); line-height: 1.6;
+}
+
+/* ── PILLAR RESPONSIVE ── */
+@media (max-width: 900px) {
+  .pillar-hero {
+    grid-template-columns: 1fr;
+    padding: 7rem 5vw 3rem;
+    min-height: auto; text-align: center;
+  }
+  .pillar-hero-content { max-width: 100%; }
+  .pillar-hero-eyebrow { justify-content: center; }
+  .pillar-hero-eyebrow::before { display: none; }
+  .pillar-hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+  .pillar-hero-image { height: 320px; order: -1; }
+  .pillar-topics-grid { grid-template-columns: 1fr; max-width: 500px; }
+  .pillar-featured-cards { grid-template-columns: 1fr; max-width: 400px; }
+}
+@media (max-width: 600px) {
+  .pillar-hero { padding: 5.5rem 5vw 2rem; }
+  .pillar-hero-headline { font-size: 2rem; }
+  .pillar-hero-image { height: 260px; }
+  .pillar-topic-card { padding: 1.8rem; }
+  .pillar-topic-num { font-size: 2rem; }
+  .pillar-topic-title { font-size: 1.1rem; }
+  .pillar-featured-headline { font-size: 1.5rem; }
 }
