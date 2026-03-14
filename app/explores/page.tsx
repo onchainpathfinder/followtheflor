@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import Newsletter from '@/components/layout/Newsletter'
+import PostCard from '@/components/blog/PostCard'
+import { getPostsByPillar } from '@/lib/mdx'
 
 export const metadata: Metadata = {
   title: 'FLOR Explores — Malta Hidden Gems, Local Food & Coastal Walks',
@@ -10,6 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default function ExploresPage() {
+  const posts = getPostsByPillar('explores')
+
   const topics = [
     {
       num: '01',
@@ -75,28 +79,40 @@ export default function ExploresPage() {
         </div>
       </section>
 
-      {/* COMING SOON */}
-      <section className="pillar-featured">
-        <span className="pillar-featured-eyebrow">Coming soon</span>
-        <h2 className="pillar-featured-headline">The first hidden gem guide is coming.</h2>
-        <div className="pillar-featured-cards">
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Hidden Gem</span>
-            <h3 className="pillar-featured-title">Valletta Side Streets</h3>
-            <p className="pillar-featured-desc">The doors nobody opens. Until now.</p>
+      {/* ARTICLES OR COMING SOON */}
+      {posts.length > 0 ? (
+        <section className="pillar-articles">
+          <span className="pillar-articles-eyebrow">Latest articles</span>
+          <h2 className="pillar-articles-headline">Read the latest.</h2>
+          <div className="pillar-articles-grid">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Food Guide</span>
-            <h3 className="pillar-featured-title">Where Locals Actually Eat</h3>
-            <p className="pillar-featured-desc">Not the tourist traps. The real ones.</p>
+        </section>
+      ) : (
+        <section className="pillar-featured">
+          <span className="pillar-featured-eyebrow">Coming soon</span>
+          <h2 className="pillar-featured-headline">The first hidden gem guide is coming.</h2>
+          <div className="pillar-featured-cards">
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Hidden Gem</span>
+              <h3 className="pillar-featured-title">Valletta Side Streets</h3>
+              <p className="pillar-featured-desc">The doors nobody opens. Until now.</p>
+            </div>
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Food Guide</span>
+              <h3 className="pillar-featured-title">Where Locals Actually Eat</h3>
+              <p className="pillar-featured-desc">Not the tourist traps. The real ones.</p>
+            </div>
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Coastal Walk</span>
+              <h3 className="pillar-featured-title">Comino Without the Crowds</h3>
+              <p className="pillar-featured-desc">When to go, where to swim, what to skip.</p>
+            </div>
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Coastal Walk</span>
-            <h3 className="pillar-featured-title">Comino Without the Crowds</h3>
-            <p className="pillar-featured-desc">When to go, where to swim, what to skip.</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* NEWSLETTER */}
       <Newsletter

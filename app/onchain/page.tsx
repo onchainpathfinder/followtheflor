@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import Newsletter from '@/components/layout/Newsletter'
+import PostCard from '@/components/blog/PostCard'
+import { getPostsByPillar } from '@/lib/mdx'
 
 export const metadata: Metadata = {
   title: 'FLOR Onchain — Crypto Compliance, MiCA & AML in Plain English',
@@ -10,6 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default function OnchainPage() {
+  const posts = getPostsByPillar('onchain')
+
   const topics = [
     {
       num: '01',
@@ -75,28 +79,28 @@ export default function OnchainPage() {
         </div>
       </section>
 
-      {/* COMING SOON */}
-      <section className="pillar-featured">
-        <span className="pillar-featured-eyebrow">Coming soon</span>
-        <h2 className="pillar-featured-headline">Articles are on the way.</h2>
-        <div className="pillar-featured-cards">
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Deep Dive</span>
-            <h3 className="pillar-featured-title">MiCA: What Actually Changes</h3>
-            <p className="pillar-featured-desc">The first deep-dive drops soon.</p>
+      {/* ARTICLES */}
+      {posts.length > 0 ? (
+        <section className="pillar-articles">
+          <span className="pillar-articles-eyebrow">Latest articles</span>
+          <h2 className="pillar-articles-headline">Read the latest.</h2>
+          <div className="pillar-articles-grid">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Red Flag Guide</span>
-            <h3 className="pillar-featured-title">Crypto AML Patterns</h3>
-            <p className="pillar-featured-desc">What your compliance team misses.</p>
+          <div className="pillar-articles-tool">
+            <p className="pillar-articles-tool-text">
+              Also check out the <a href="https://floronchain.com" target="_blank" rel="noopener noreferrer" className="pillar-articles-tool-link">AML Risk Checker Tool</a> on floronchain.com
+            </p>
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Explainer</span>
-            <h3 className="pillar-featured-title">iGaming Meets Crypto</h3>
-            <p className="pillar-featured-desc">Where regulation gets interesting.</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <section className="pillar-featured">
+          <span className="pillar-featured-eyebrow">Coming soon</span>
+          <h2 className="pillar-featured-headline">Articles are on the way.</h2>
+        </section>
+      )}
 
       {/* NEWSLETTER */}
       <Newsletter

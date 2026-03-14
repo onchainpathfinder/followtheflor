@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import Newsletter from '@/components/layout/Newsletter'
+import PostCard from '@/components/blog/PostCard'
+import { getPostsByPillar } from '@/lib/mdx'
 
 export const metadata: Metadata = {
   title: 'FLOR Runs — Training Logs, Malta Routes & Race Reports',
@@ -10,6 +12,8 @@ export const metadata: Metadata = {
 }
 
 export default function RunsPage() {
+  const posts = getPostsByPillar('runs')
+
   const topics = [
     {
       num: '01',
@@ -75,28 +79,40 @@ export default function RunsPage() {
         </div>
       </section>
 
-      {/* COMING SOON */}
-      <section className="pillar-featured">
-        <span className="pillar-featured-eyebrow">Coming soon</span>
-        <h2 className="pillar-featured-headline">First training log dropping soon.</h2>
-        <div className="pillar-featured-cards">
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Training Log</span>
-            <h3 className="pillar-featured-title">Week 1: Base Building</h3>
-            <p className="pillar-featured-desc">Real numbers, real routes, real Malta.</p>
+      {/* ARTICLES OR COMING SOON */}
+      {posts.length > 0 ? (
+        <section className="pillar-articles">
+          <span className="pillar-articles-eyebrow">Latest articles</span>
+          <h2 className="pillar-articles-headline">Read the latest.</h2>
+          <div className="pillar-articles-grid">
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
+            ))}
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Route Guide</span>
-            <h3 className="pillar-featured-title">Dingli Cliffs Trail</h3>
-            <p className="pillar-featured-desc">The route that earns the sunrise.</p>
+        </section>
+      ) : (
+        <section className="pillar-featured">
+          <span className="pillar-featured-eyebrow">Coming soon</span>
+          <h2 className="pillar-featured-headline">First training log dropping soon.</h2>
+          <div className="pillar-featured-cards">
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Training Log</span>
+              <h3 className="pillar-featured-title">Week 1: Base Building</h3>
+              <p className="pillar-featured-desc">Real numbers, real routes, real Malta.</p>
+            </div>
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Route Guide</span>
+              <h3 className="pillar-featured-title">Dingli Cliffs Trail</h3>
+              <p className="pillar-featured-desc">The route that earns the sunrise.</p>
+            </div>
+            <div className="pillar-featured-card">
+              <span className="pillar-featured-tag">Race Report</span>
+              <h3 className="pillar-featured-title">Mdina 2 Spinola</h3>
+              <p className="pillar-featured-desc">What I learned and what I&apos;d change.</p>
+            </div>
           </div>
-          <div className="pillar-featured-card">
-            <span className="pillar-featured-tag">Race Report</span>
-            <h3 className="pillar-featured-title">Mdina 2 Spinola</h3>
-            <p className="pillar-featured-desc">What I learned and what I&apos;d change.</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* NEWSLETTER */}
       <Newsletter
