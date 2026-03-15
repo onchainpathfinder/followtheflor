@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Blas Bay — How to Get There | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+  .info-card { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 16px; }
+  .info-card h3 { font-size: 0.85rem; color: #00e5ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .info-card p { font-size: 0.95rem; color: #eee; line-height: 1.5; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>San Blas Bay — How to Find It</h2>
+  <div id="map"></div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ff2d78;"></div>
+      <span>San Blas Beach</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #00e5ff;"></div>
+      <span>Parking / Trailhead</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ffd600;"></div>
+      <span>Key Landmarks</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #ff2d78;"></div>
+      <span>Trail to Beach (~15 min)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #00e5ff; border: 1px dashed #00e5ff; background: transparent;"></div>
+      <span>Driving Route</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #ffd600; opacity: 0.6;"></div>
+      <span>Coastal Trail to Ramla Bay</span>
+    </div>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <h3>GPS Coordinates</h3>
+      <p>36.0583°N, 14.2870°E<br><a href="https://www.google.com/maps/search/?api=1&query=36.0583,14.2870" target="_blank" style="color: #ff2d78;">Open in Google Maps →</a></p>
+    </div>
+    <div class="info-card">
+      <h3>From Mġarr Ferry</h3>
+      <p>~15 min drive via Nadur. Follow signs to Victoria, then Nadur, then Triq San Blas.</p>
+    </div>
+    <div class="info-card">
+      <h3>Trail Down</h3>
+      <p>500m, 10-15 min down, 15-20 min back up. Moderate-steep. Wear proper shoes.</p>
+    </div>
+    <div class="info-card">
+      <h3>Parking</h3>
+      <p>8-10 spots at trailhead. Fills by 10am in summer. Backup: park in Nadur village.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Initialize map centered on San Blas area
+var map = L.map('map', {
+  scrollWheelZoom: false
+}).setView([36.0555, 14.2830], 15);
+
+// Add tile layer — OpenStreetMap
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+}).addTo(map);
+
+// Custom icons
+var beachIcon = L.divIcon({
+  html: '<div style="background:#ff2d78;width:28px;height:28px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(255,45,120,0.5);">🏖️</div>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+  className: ''
+});
+
+var parkingIcon = L.divIcon({
+  html: '<div style="background:#00e5ff;width:28px;height:28px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,229,255,0.5);">🅿️</div>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+  className: ''
+});
+
+var landmarkIcon = L.divIcon({
+  html: '<div style="background:#ffd600;width:24px;height:24px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 8px rgba(255,214,0,0.5);">⛪</div>',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  className: ''
+});
+
+var ferryIcon = L.divIcon({
+  html: '<div style="background:#ffd600;width:24px;height:24px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 8px rgba(255,214,0,0.5);">⛴️</div>',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  className: ''
+});
+
+var ramlaIcon = L.divIcon({
+  html: '<div style="background:#ffd600;width:24px;height:24px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 2px 8px rgba(255,214,0,0.5);">🏖️</div>',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+  className: ''
+});
+
+// === MARKERS ===
+
+// San Blas Beach
+L.marker([36.0583, 14.2870], {icon: beachIcon}).addTo(map)
+  .bindPopup('<strong>San Blas Beach</strong><br>Red sand, crystal-clear water, almost no people.<div class="popup-detail">No facilities — bring everything you need.</div>');
+
+// Parking / Trailhead
+L.marker([36.0545, 14.2835], {icon: parkingIcon}).addTo(map)
+  .bindPopup('<strong>Parking / Trailhead</strong><br>Small dirt clearing, 8-10 cars max.<div class="popup-detail">Fills by 10am in summer. Trail starts here.</div>');
+
+// Nadur Church (navigation landmark)
+L.marker([36.0440, 14.2940], {icon: landmarkIcon}).addTo(map)
+  .bindPopup('<strong>Nadur Parish Church</strong><br>Key landmark for navigation.<div class="popup-detail">Turn onto Triq San Blas from here. Street parking available nearby.</div>');
+
+// Mġarr Harbour (ferry terminal)
+L.marker([36.0260, 14.2995], {icon: ferryIcon}).addTo(map)
+  .bindPopup('<strong>Mġarr Harbour</strong><br>Gozo ferry terminal.<div class="popup-detail">25 min ferry from Ċirkewwa, Malta. ~15 min drive to San Blas.</div>');
+
+// Ramla Bay
+L.marker([36.0620, 14.2750], {icon: ramlaIcon}).addTo(map)
+  .bindPopup('<strong>Ramla Bay</strong><br>Gozo\'s biggest beach — also red sand.<div class="popup-detail">30 min coastal walk from San Blas along the clifftops.</div>');
+
+// === ROUTES ===
+
+// Trail from parking to beach (walking path)
+var trailPath = [
+  [36.0545, 14.2835],
+  [36.0550, 14.2840],
+  [36.0555, 14.2848],
+  [36.0560, 14.2855],
+  [36.0565, 14.2858],
+  [36.0570, 14.2862],
+  [36.0575, 14.2865],
+  [36.0580, 14.2868],
+  [36.0583, 14.2870]
+];
+
+L.polyline(trailPath, {
+  color: '#ff2d78',
+  weight: 4,
+  opacity: 0.9,
+  dashArray: null
+}).addTo(map).bindPopup('<strong>Trail to Beach</strong><br>~500m, 10-15 min down.<div class="popup-detail">Steep, rocky path through terraced fields and carob trees. Wear proper shoes!</div>');
+
+// Driving route from ferry to parking (simplified)
+var drivingRoute = [
+  [36.0260, 14.2995],
+  [36.0290, 14.2960],
+  [36.0320, 14.2940],
+  [36.0350, 14.2930],
+  [36.0380, 14.2935],
+  [36.0410, 14.2940],
+  [36.0440, 14.2940],
+  [36.0460, 14.2920],
+  [36.0480, 14.2900],
+  [36.0500, 14.2870],
+  [36.0520, 14.2850],
+  [36.0545, 14.2835]
+];
+
+L.polyline(drivingRoute, {
+  color: '#00e5ff',
+  weight: 3,
+  opacity: 0.6,
+  dashArray: '10, 8'
+}).addTo(map);
+
+// Coastal trail to Ramla Bay
+var coastalTrail = [
+  [36.0583, 14.2870],
+  [36.0590, 14.2860],
+  [36.0600, 14.2845],
+  [36.0605, 14.2830],
+  [36.0610, 14.2810],
+  [36.0615, 14.2790],
+  [36.0618, 14.2770],
+  [36.0620, 14.2750]
+];
+
+L.polyline(coastalTrail, {
+  color: '#ffd600',
+  weight: 3,
+  opacity: 0.5,
+  dashArray: '6, 8'
+}).addTo(map).bindPopup('<strong>Coastal Trail to Ramla Bay</strong><br>~1.5km, 25-30 min walk.<div class="popup-detail">Unofficial path along clifftops. Amazing views. Wear proper shoes.</div>');
+
+// Fit map to show all key points
+var bounds = L.latLngBounds([
+  [36.0240, 14.2700],
+  [36.0640, 14.3020]
+]);
+map.fitBounds(bounds, {padding: [30, 30]});
+</script>
+</body>
+</html>
