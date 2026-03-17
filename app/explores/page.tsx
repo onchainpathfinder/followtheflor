@@ -7,8 +7,8 @@ import PostCard from '@/components/blog/PostCard'
 import { getPostsByPillar } from '@/lib/mdx'
 
 export const metadata: Metadata = {
-  title: 'FLOR Explores — Malta Hidden Gems, Local Food & Coastal Walks',
-  description: 'Hidden restaurants, coastal walks, and cultural corners of Malta. The real island — not the tourist brochure. Found on foot, shared with intention.',
+  title: 'FLOR Explores — Maltese Islands Hidden Gems, Local Food & Coastal Walks',
+  description: 'Hidden restaurants, coastal walks, and cultural corners of the Maltese Islands. The real islands — not the tourist brochure. Found on foot, shared with intention.',
 }
 
 export default function ExploresPage() {
@@ -28,12 +28,12 @@ export default function ExploresPage() {
     {
       num: '03',
       title: 'Cultural Corners',
-      desc: 'Baroque churches, festa traditions, the stories behind Valletta\'s side streets. Malta beyond the beach.',
+      desc: 'Baroque churches, festa traditions, the stories behind Valletta\'s side streets. The Maltese Islands beyond the beach.',
     },
     {
       num: '04',
       title: 'Local Food',
-      desc: 'Pastizzi at 6am, fenkata on a Friday, the wine nobody exports. Eating Malta like a local.',
+      desc: 'Pastizzi at 6am, fenkata on a Friday, the wine nobody exports. Eating like a local across the Maltese Islands.',
     },
   ]
 
@@ -50,13 +50,13 @@ export default function ExploresPage() {
             The spots nobody else will tell you about.
           </h1>
           <p className="pillar-hero-sub">
-            Hidden restaurants, coastal walks, cultural corners of Malta. The real island — not the tourist brochure version. Found on foot, shared with intention.
+            Hidden restaurants, coastal walks, cultural corners of the Maltese Islands. The real islands — not the tourist brochure version. Found on foot, shared with intention.
           </p>
         </div>
         <div className="pillar-hero-image">
           <Image
             src="/images/strip-gems.jpg"
-            alt="CONFETTI — colorful hidden gem doorway in Malta"
+            alt="CONFETTI — colorful hidden gem doorway in the Maltese Islands"
             fill
             priority
             className="pillar-hero-img"
@@ -67,7 +67,7 @@ export default function ExploresPage() {
       {/* TOPICS */}
       <section className="pillar-topics">
         <span className="pillar-topics-eyebrow">What you&apos;ll find here</span>
-        <h2 className="pillar-topics-headline">The real Malta. Not the postcard.</h2>
+        <h2 className="pillar-topics-headline">The real Maltese Islands. Not the postcard.</h2>
         <div className="pillar-topics-grid">
           {topics.map((topic) => (
             <div key={topic.num} className="pillar-topic-card">
@@ -117,10 +117,10 @@ export default function ExploresPage() {
       {/* NEWSLETTER */}
       <Newsletter
         eyebrow="Find the gems first"
-        headline={<>Get Malta&apos;s hidden spots<br /><em>before everyone else does.</em></>}
-        description="The restaurants, walks, and cultural corners that tourists miss. Delivered once a week, found on foot."
+        headline={<>Get the Maltese Islands&apos; hidden spots<br /><em>before everyone else does.</em></>}
+        description="The restaurants, walks, and cultural corners that tourists miss. Malta, Gozo, Comino — delivered once a week, found on foot."
         proofItems={[
-          'Malta spots you won\'t find on Google',
+          'Spots across the Maltese Islands you won\'t find on Google',
           'Restaurant picks from a local, not an algorithm',
           'Coastal walks tested and photographed by Flor',
         ]}

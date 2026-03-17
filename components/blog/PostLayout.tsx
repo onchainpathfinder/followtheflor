@@ -37,10 +37,10 @@ const pillarNewsletter: Record<string, {
   },
   explores: {
     eyebrow: 'Find the gems first',
-    headline: <>Get Malta&apos;s hidden spots<br /><em>before everyone else does.</em></>,
-    description: 'The restaurants, walks, and cultural corners that tourists miss.',
+    headline: <>Get the Maltese Islands&apos; hidden spots<br /><em>before everyone else does.</em></>,
+    description: 'The restaurants, walks, and cultural corners that tourists miss. Malta, Gozo, Comino — found on foot.',
     proofItems: [
-      'Malta spots you won\'t find on Google',
+      'Spots across the Maltese Islands you won\'t find on Google',
       'Restaurant picks from a local, not an algorithm',
       'Coastal walks tested and photographed by Flor',
     ],
