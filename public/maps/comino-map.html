@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comino Full Island Loop — Trail Map | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+  .info-card { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 16px; }
+  .info-card h3 { font-size: 0.85rem; color: #00e5ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .info-card p { font-size: 0.95rem; color: #eee; line-height: 1.5; }
+  .info-card a { color: #ff2d78; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>Comino Full Island Loop — Trail Map</h2>
+  <div id="map"></div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ff2d78;"></div>
+      <span>Key Stops</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #00e5ff;"></div>
+      <span>Swim Spots</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ffd600;"></div>
+      <span>Landmarks</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #ff2d78;"></div>
+      <span>Hiking Loop (~8.5 km)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #00e5ff; border: 1px dashed #00e5ff; background: transparent;"></div>
+      <span>Ferry Routes</span>
+    </div>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <h3>Blue Lagoon Jetty</h3>
+      <p>36.0117°N, 14.3262°E<br><a href="https://www.google.com/maps/search/?api=1&query=36.0117,14.3262" target="_blank">Open in Google Maps →</a></p>
+    </div>
+    <div class="info-card">
+      <h3>Ferry from Malta</h3>
+      <p>From Ċirkewwa, ~25 min crossing. First boat ~9am in shoulder season. €10-15 return.</p>
+    </div>
+    <div class="info-card">
+      <h3>Ferry from Gozo</h3>
+      <p>From Mġarr Harbour, ~10 min crossing. Shorter and easier if you're already in Gozo.</p>
+    </div>
+    <div class="info-card">
+      <h3>The Loop</h3>
+      <p>~8.5 km, 2.5–3.5 hours. Moderate terrain, rocky in places. Bring 2L water minimum.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var map = L.map('map', {
+  scrollWheelZoom: false
+}).setView([36.0110, 14.3340], 15);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+}).addTo(map);
+
+// Custom icons
+function makeIcon(emoji, color, size) {
+  size = size || 28;
+  return L.divIcon({
+    html: '<div style="background:' + color + ';width:' + size + 'px;height:' + size + 'px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:' + (size - 14) + 'px;box-shadow:0 2px 8px ' + color + '80;">' + emoji + '</div>',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2],
+    className: ''
+  });
+}
+
+// === MARKERS ===
+
+// Blue Lagoon (start/end)
+L.marker([36.0117, 14.3262], {icon: makeIcon('🚢', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Blue Lagoon Jetty</strong><br>Start and end of the loop. Ferry drop-off point.<div class="popup-detail">In shoulder season, the lagoon might be empty enough to swim. Check on your way back.</div>');
+
+// Santa Marija Tower
+L.marker([36.0133, 14.3348], {icon: makeIcon('🏰', '#ffd600', 26)}).addTo(map)
+  .bindPopup('<strong>Santa Marija Tower</strong><br>Highest point on Comino. Built 1618.<div class="popup-detail">Lascaris watchtower — part of the fire signal chain between Malta and Gozo. Sometimes open in shoulder season.</div>');
+
+// South Cliffs / Battery
+L.marker([36.0065, 14.3365], {icon: makeIcon('🪨', '#ffd600', 24)}).addTo(map)
+  .bindPopup('<strong>South Cliffs & Battery</strong><br>The wild side of Comino — unguarded cliff edges, deep blue water.<div class="popup-detail">18th-century fortification + abandoned isolation hospital nearby. The section most visitors never see.</div>');
+
+// Santa Marija Bay
+L.marker([36.0168, 14.3395], {icon: makeIcon('🏖️', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Santa Marija Bay</strong><br>Your lunch spot. Sandy bottom, shallow water.<div class="popup-detail">Quieter than Blue Lagoon year-round. In shoulder season, you might have it to yourself.</div>');
+
+// Crystal Lagoon
+L.marker([36.0152, 14.3275], {icon: makeIcon('🤿', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Crystal Lagoon</strong><br>Deep inlet, impossibly clear water. Best snorkelling on the island.<div class="popup-detail">In summer: boat tours and cliff-jumping. In shoulder season: just you and the sea.</div>');
+
+// Chapel of the Return
+L.marker([36.0130, 14.3420], {icon: makeIcon('⛪', '#ffd600', 22)}).addTo(map)
+  .bindPopup('<strong>Chapel of the Return of the Holy Land</strong><br>Tiny church, here since the 13th century.<div class="popup-detail">Usually locked. Several hermits chose this spot over the centuries.</div>');
+
+// Isolation Hospital
+L.marker([36.0095, 14.3310], {icon: makeIcon('🏚️', '#ffd600', 22)}).addTo(map)
+  .bindPopup('<strong>Old Isolation Hospital</strong><br>Abandoned, crumbling, atmospheric.<div class="popup-detail">Built in the 1800s for quarantine. Now slowly returning to the landscape.</div>');
+
+// === HIKING LOOP (clockwise from Blue Lagoon) ===
+var hikingLoop = [
+  // Blue Lagoon jetty
+  [36.0117, 14.3262],
+  // Head inland toward tower
+  [36.0120, 14.3280],
+  [36.0125, 14.3310],
+  [36.0130, 14.3335],
+  // Santa Marija Tower
+  [36.0133, 14.3348],
+  // South toward cliffs
+  [36.0125, 14.3360],
+  [36.0115, 14.3365],
+  [36.0105, 14.3370],
+  [36.0095, 14.3365],
+  // Past isolation hospital area
+  [36.0085, 14.3355],
+  [36.0075, 14.3350],
+  // South cliffs
+  [36.0065, 14.3365],
+  [36.0060, 14.3380],
+  [36.0065, 14.3395],
+  // Swing east along south coast
+  [36.0075, 14.3410],
+  [36.0085, 14.3418],
+  [36.0095, 14.3422],
+  [36.0105, 14.3425],
+  [36.0115, 14.3428],
+  // Chapel area
+  [36.0130, 14.3420],
+  // Up to Santa Marija Bay
+  [36.0145, 14.3410],
+  [36.0155, 14.3405],
+  [36.0168, 14.3395],
+  // North along east coast
+  [36.0175, 14.3380],
+  [36.0178, 14.3360],
+  [36.0175, 14.3340],
+  [36.0170, 14.3320],
+  [36.0165, 14.3300],
+  // Crystal Lagoon
+  [36.0155, 14.3285],
+  [36.0152, 14.3275],
+  // Back to Blue Lagoon
+  [36.0145, 14.3268],
+  [36.0135, 14.3262],
+  [36.0125, 14.3260],
+  [36.0117, 14.3262]
+];
+
+L.polyline(hikingLoop, {
+  color: '#ff2d78',
+  weight: 4,
+  opacity: 0.85
+}).addTo(map).bindPopup('<strong>Full Island Loop</strong><br>~8.5 km, 2.5–3.5 hours clockwise.<div class="popup-detail">Follow the coast the whole way. Rocky terrain, no shade. Bring water and proper shoes.</div>');
+
+// === FERRY ROUTES ===
+
+// Ferry from Ċirkewwa (Malta)
+var ferryMalta = [
+  [35.9892, 14.3277],
+  [35.9950, 14.3275],
+  [36.0020, 14.3270],
+  [36.0070, 14.3265],
+  [36.0117, 14.3262]
+];
+
+L.polyline(ferryMalta, {
+  color: '#00e5ff',
+  weight: 3,
+  opacity: 0.5,
+  dashArray: '10, 8'
+}).addTo(map).bindPopup('<strong>Ferry from Ċirkewwa (Malta)</strong><br>~25 min crossing.<div class="popup-detail">First boat ~9am in shoulder season. Check schedules the night before.</div>');
+
+// Ferry from Mġarr (Gozo)
+var ferryGozo = [
+  [36.0260, 14.2995],
+  [36.0230, 14.3050],
+  [36.0200, 14.3100],
+  [36.0170, 14.3150],
+  [36.0145, 14.3200],
+  [36.0130, 14.3240],
+  [36.0117, 14.3262]
+];
+
+L.polyline(ferryGozo, {
+  color: '#00e5ff',
+  weight: 3,
+  opacity: 0.5,
+  dashArray: '10, 8'
+}).addTo(map).bindPopup('<strong>Ferry from Mġarr (Gozo)</strong><br>~10 min crossing.<div class="popup-detail">Shorter option if you\'re already in Gozo.</div>');
+
+// Ferry terminal markers (smaller, outside main island)
+L.marker([35.9892, 14.3277], {icon: makeIcon('⛴️', '#ffd600', 22)}).addTo(map)
+  .bindPopup('<strong>Ċirkewwa Ferry Terminal</strong><br>Malta side. 25 min crossing to Comino.');
+
+L.marker([36.0260, 14.2995], {icon: makeIcon('⛴️', '#ffd600', 22)}).addTo(map)
+  .bindPopup('<strong>Mġarr Harbour</strong><br>Gozo side. 10 min crossing to Comino.');
+
+// Fit map to show Comino + ferry terminals
+var bounds = L.latLngBounds([
+  [35.9850, 14.2950],
+  [36.0300, 14.3460]
+]);
+map.fitBounds(bounds, {padding: [30, 30]});
+</script>
+</body>
+</html>
