@@ -120,7 +120,7 @@ export default function ExploresPage() {
         headline={<>Get the Maltese Islands&apos; hidden spots<br /><em>before everyone else does.</em></>}
         description="The restaurants, walks, and cultural corners that tourists miss. Malta, Gozo, Comino — delivered once a week, found on foot."
         proofItems={[
-          'Spots across the Maltese Islands you won\'t find on Google',
+          'Spots across the Maltese Islands that guidebooks skip',
           'Restaurant picks from a local, not an algorithm',
           'Coastal walks tested and photographed by Flor',
         ]}

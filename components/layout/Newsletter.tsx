@@ -15,7 +15,7 @@ export default function Newsletter({
   description = 'One email. The best of crypto insights, Malta secrets, and trail finds — picked just for you.',
   proofItems = [
     'Crypto red flags your compliance team misses',
-    'Malta spots you won\'t find on Google',
+    'Malta spots the guidebooks don\'t cover',
     'Routes tested by someone who actually runs them',
   ],
 }: NewsletterProps) {
