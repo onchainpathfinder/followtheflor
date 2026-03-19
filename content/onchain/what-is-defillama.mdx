@@ -1,0 +1,173 @@
+---
+title: "What Is DefiLlama? The Free DeFi Dashboard Every Analyst Should Know"
+description: "DefiLlama is the go-to open-source DeFi analytics platform. Here's what it tracks, how to use it, and why compliance professionals should have it bookmarked."
+date: "2026-03-19"
+pillar: "onchain"
+category: "web3"
+tags: ["DefiLlama", "DeFi analytics", "TVL", "DeFi dashboard", "on-chain analysis"]
+primaryKeyword: "what is DefiLlama"
+readingTime: "7 min read"
+audience: "all"
+---
+
+# What Is DefiLlama? The Free DeFi Dashboard Every Analyst Should Know
+
+If you've ever tried to figure out how much money is sitting in a DeFi protocol, which blockchain has the most activity, or where stablecoin liquidity is flowing — you've probably ended up on DefiLlama.
+
+And if you haven't, you should.
+
+![DefiLlama official logo — the open-source DeFi analytics dashboard](/images/onchain/defillama-logo.png)
+
+DefiLlama is an open-source analytics platform that tracks decentralised finance across every major blockchain. Total value locked, stablecoin flows, DEX volumes, yield opportunities, protocol revenues — all of it, in one place, for free.
+
+No token. No paywall on core data. No agenda. Just data.
+
+<Callout type="insight" title="Why DefiLlama matters">
+In a space where most "analytics" platforms are trying to sell you something, DefiLlama is genuinely neutral. It's open-source, community-driven, and has become the default data source for DeFi researchers, traders, and increasingly — compliance teams.
+</Callout>
+
+## The Dashboard: What You See First
+
+When you land on [defillama.com](https://defillama.com), you're looking at a real-time snapshot of the entire DeFi ecosystem. Dark theme, clean layout, zero clutter — just numbers.
+
+The homepage gives you three things immediately:
+
+**Total Value Locked (TVL)** — the headline number. This is the combined value of all assets deposited across every DeFi protocol DefiLlama tracks. As of writing, that's around $95 billion.
+
+**Key Metrics** — stablecoin market cap, 24-hour DEX volume, and perpetual futures volume. These three numbers tell you more about market activity than most trading dashboards.
+
+**The TVL Chart** — a historical view of how DeFi has grown (and contracted) over time. The 2021 peak, the 2022 crash, the 2024 recovery — it's all visible in one chart.
+
+<Callout type="tip" title="Pro tip">
+Use the chain filter tabs at the top (Ethereum, Solana, BSC, Base, etc.) to see TVL broken down by ecosystem. This instantly shows you where the money is — and where it's moving.
+</Callout>
+
+## TVL: The Metric That Matters Most
+
+Total Value Locked is the DeFi equivalent of "assets under management" in traditional finance. It tells you how much capital users have trusted to a protocol's smart contracts.
+
+<StatHighlight value="$95.5B" label="Total Value Locked in DeFi — tracked across 200+ chains" accent="cyan" />
+
+But TVL isn't just a vanity metric. Here's what it actually tells you:
+
+<ComparisonTable
+  headers="TVL Movement | What It Signals | Why It Matters"
+  rows="TVL rising steadily | Growing user confidence and adoption | Protocol is attracting capital — bullish signal ;; TVL dropping fast | Users withdrawing funds | Could mean exploit, loss of confidence, or better yields elsewhere ;; TVL spike (sudden) | Whale deposit or incentive programme launch | Check if organic or artificial — airdrop farming inflates TVL ;; TVL flat despite market rally | Users not engaging with the protocol | Protocol may be losing relevance even if price is up"
+/>
+
+<Accordion title="How TVL can mislead you">
+TVL isn't perfect. A protocol can inflate its TVL through recursive borrowing (deposit, borrow, redeposit), through counting the same assets multiple times across layers, or through token incentives that attract mercenary capital that leaves the moment rewards dry up. Always look at TVL alongside other metrics — active users, revenue, transaction count. DefiLlama makes this easy by showing multiple data points per protocol.
+</Accordion>
+
+## Chains: Comparing Ecosystems Side by Side
+
+The [Chains page](https://defillama.com/chains) is where DefiLlama gets really useful for macro analysis. It breaks down TVL by blockchain in a pie chart, showing you exactly where capital is concentrated — and Ethereum's dominance is immediately obvious.
+
+Right now, the distribution tells a clear story:
+
+<ComparisonTable
+  headers="Chain | TVL Share | What It Tells You"
+  rows="Ethereum | ~59% | Still the undisputed DeFi king — most blue-chip protocols live here ;; Solana | ~7% | Fastest-growing ecosystem — strong retail and DEX activity ;; BSC | ~6% | Mature ecosystem — large user base, lower fees ;; Base | ~4% | Coinbase's L2 — growing fast with institutional backing ;; Tron | ~4% | Stablecoin highway — dominates USDT transfers ;; Arbitrum | ~2% | Leading Ethereum L2 for DeFi-native users"
+/>
+
+<Callout type="compliance" title="Compliance angle">
+Chain distribution matters for risk assessment. If you're monitoring a VASP that operates on Tron, you should know that Tron handles more USDT transfers than any other chain — and that's exactly why it's a high-risk chain for illicit flows. DefiLlama gives you the data to contextualise which ecosystems your customers are interacting with.
+</Callout>
+
+## Stablecoins: Following the Money
+
+The [stablecoins dashboard](https://defillama.com/stablecoins) is — in my opinion — one of the most underrated features on DefiLlama. It tracks every major stablecoin across every chain, showing market cap, peg stability, and flow direction.
+
+<StatHighlight value="$315B+" label="Total stablecoin market cap — with USDT holding 58% dominance" accent="pink" />
+
+What you can track here:
+
+- **Total stablecoin supply** — is the overall market expanding or contracting?
+- **USDT vs USDC dominance** — which stablecoin is gaining market share?
+- **Chain-level flows** — where are stablecoins migrating to? Ethereum? Tron? Base?
+- **Peg stability** — is any stablecoin losing its peg? (Remember UST?)
+
+<Accordion title="Why stablecoin flows matter more than you think">
+Stablecoins are the plumbing of crypto. When stablecoin supply on a chain increases, it usually means capital is flowing in — people are getting ready to buy or deploy into DeFi. When it decreases, money is leaving. Tracking stablecoin flows across chains gives you an early signal for where market activity is heading before it shows up in token prices. For compliance, stablecoin concentration on specific chains (particularly Tron) is a risk indicator worth monitoring.
+</Accordion>
+
+## Yields: Where the Returns Are
+
+The [Yields page](https://defillama.com/yields) tracks DeFi yield opportunities across every protocol and chain — over 13,000 pools on 500+ protocols across 120+ chains. It's the most comprehensive yield aggregator available, completely free.
+
+<StatHighlight value="13,000+" label="Yield pools tracked across 500+ protocols and 120+ chains" accent="yellow" />
+
+<ComparisonTable
+  headers="Feature | What It Shows | How to Use It"
+  rows="Pool rankings | APY, TVL, and chain for every yield pool | Sort by APY to find opportunities — then check TVL to filter out risky micro-pools ;; Curated presets | Stables, Majors, Liquid Staking, Safe Haven, High Yield | Use presets to quickly filter by risk tolerance ;; Historical APY | How yield has changed over time for each pool | Avoid pools where APY is crashing — likely unsustainable ;; Token and chain filters | Narrow down to specific assets or ecosystems | Find the best ETH yield on Arbitrum, or the best USDC rate on Base"
+/>
+
+<Callout type="warning" title="A word of caution">
+DefiLlama itself puts it best: they don't audit or endorse any protocol listed. High APY often means high risk. A 200% yield on an unknown protocol is not an opportunity — it's a red flag. Use the yield data for research, not as financial advice.
+</Callout>
+
+## DEX Volume and Protocol Revenue
+
+Beyond TVL and yields, DefiLlama tracks two metrics that most people overlook:
+
+### DEX Volume
+
+The DEX aggregator page shows trading volume across decentralised exchanges — Uniswap, Jupiter, Raydium, PancakeSwap, and dozens more. This tells you where trading activity is happening on-chain, not on centralised exchanges.
+
+<Accordion title="Why DEX volume matters for compliance">
+DEX volume is a measure of on-chain trading activity that bypasses traditional intermediaries. For compliance professionals, high and growing DEX volume on a specific chain suggests increased decentralised activity that may not be subject to the same KYC/AML controls as centralised exchanges. It's an environmental risk factor for your risk assessments.
+</Accordion>
+
+### Protocol Revenue
+
+DefiLlama tracks how much revenue each protocol generates — the actual fees collected, not just TVL. This is the DeFi equivalent of a profit and loss statement. A protocol with $1 billion in TVL but near-zero revenue is fundamentally different from one generating millions in daily fees.
+
+<Callout type="insight" title="The real signal">
+Revenue separates real protocols from hype. A protocol's TVL can be inflated by incentives, but revenue is earned. When you're evaluating the health of a DeFi ecosystem, revenue tells you whether people are actually using it — or just parking assets for airdrop points.
+</Callout>
+
+## DefiLlama for Compliance Professionals
+
+Here's where it gets specific for anyone in crypto compliance, AML, or risk management.
+
+DefiLlama gives you environmental intelligence — the macro context you need to assess risk at the ecosystem level. Here's how to use it:
+
+<ComparisonTable
+  headers="Compliance Task | DefiLlama Feature | What to Look For"
+  rows="Environmental risk assessment | Chains page | Which chains have the most activity? Where is TVL concentrated? High Tron exposure = higher risk profile ;; Stablecoin exposure monitoring | Stablecoins page | Which stablecoins are your customers using? Are any losing their peg? ;; Protocol due diligence | Protocol pages | Is the protocol's TVL stable or dropping? Is it generating real revenue? ;; DeFi activity monitoring | DEX volume and yields | How much activity is happening outside regulated exchanges? ;; Market stress indicators | TVL trends and stablecoin flows | Is capital leaving DeFi? Are stablecoins being redeemed? These signal potential market stress"
+/>
+
+<Accordion title="How I use DefiLlama in my compliance work">
+Every time I'm doing a risk assessment for a platform that supports DeFi interactions, I check three things on DefiLlama: the chain's TVL trend (growing or declining?), the stablecoin distribution on that chain (USDT-heavy = higher risk), and whether the protocols my users are interacting with have stable TVL and real revenue. It takes five minutes and gives you context that no compliance tool provides out of the box.
+</Accordion>
+
+## The Full Feature Breakdown
+
+Here's everything DefiLlama offers, at a glance:
+
+<ComparisonTable
+  headers="Feature | What It Tracks | Free?"
+  rows="TVL Dashboard | Total value locked across all DeFi protocols and chains | Yes ;; Chains | TVL breakdown by blockchain with market share | Yes ;; Stablecoins | Market cap, peg data, chain distribution for all stablecoins | Yes ;; Yields | 13,000+ yield pools across 500+ protocols | Yes ;; DEX Aggregator | Trading volume across decentralised exchanges | Yes ;; Protocol Pages | Individual protocol TVL, revenue, user metrics | Yes ;; API | Programmatic access to all DefiLlama data | Yes ;; LlamaAI | AI-powered questions about DeFi data | Premium ;; RWA Dashboard | Real-world asset tokenisation tracking | Yes"
+/>
+
+## How to Start Using DefiLlama
+
+<StepList steps="Bookmark defillama.com :: No account needed. The entire platform is free and open — just go to defillama.com and start exploring. ;; Check the homepage daily :: Spend 30 seconds scanning TVL, stablecoin market cap, and DEX volume. You'll quickly develop a feel for market conditions. ;; Explore one chain deeply :: Pick a chain you work with — Ethereum, Solana, or Base — and click into it. See which protocols hold the most TVL and how it's trended. ;; Set up the stablecoin view :: Filter the stablecoins page by the chains and stablecoins relevant to your work. Bookmark that filtered view for quick access. ;; Use the API for automation :: If you need regular data pulls, DefiLlama's API is free and well-documented. Build dashboards or integrate the data into your compliance monitoring." />
+
+## Flor's Take
+
+DefiLlama is one of those tools that makes you wonder why everything in crypto isn't this good. It's free. It's open-source. It covers every chain and protocol that matters. And it doesn't try to sell you a token while you're using it.
+
+For traders and researchers, it's the starting point for any DeFi analysis. For compliance professionals, it's environmental intelligence that most people in the industry don't even know exists.
+
+<Callout type="insight" title="The bottom line">
+If you work in crypto — in any capacity — and you don't have DefiLlama bookmarked, fix that today. It's the single most useful free tool in DeFi, and it makes everyone's analysis better. No excuses.
+</Callout>
+
+The platform keeps shipping new features (RWA tracking, LlamaAI, improved protocol pages), and because it's open-source, the community keeps it honest. In an industry full of paid shills and biased dashboards, that matters more than you think.
+
+*Questions about how to use DefiLlama for your specific use case? Drop me a message.*
+
+---
+
+*This article is educational content only and does not constitute financial, legal, or investment advice. Always conduct your own research and consult qualified professionals before making decisions based on DeFi data.*

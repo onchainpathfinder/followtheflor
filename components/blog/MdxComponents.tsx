@@ -1,5 +1,10 @@
 import React from 'react'
 import type { MDXComponents } from 'mdx/types'
+import Callout from '@/components/ui/Callout'
+import Accordion from '@/components/ui/Accordion'
+import StatHighlight from '@/components/ui/StatHighlight'
+import ComparisonTable from '@/components/ui/ComparisonTable'
+import StepList from '@/components/ui/StepList'
 
 const mdxComponents: MDXComponents = {
   h1: (props) => <h1 className="article-h1" {...props} />,
@@ -23,6 +28,11 @@ const mdxComponents: MDXComponents = {
   strong: (props) => <strong className="article-strong" {...props} />,
   em: (props) => <em className="article-em" {...props} />,
   hr: () => <hr className="article-hr" />,
+  Callout,
+  Accordion,
+  StatHighlight,
+  ComparisonTable,
+  StepList,
 }
 
 export default mdxComponents
