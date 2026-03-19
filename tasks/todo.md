@@ -43,3 +43,22 @@
 8. Why This Walk
 
 **Competitors to beat:** Generic AllTrails listings with no story. Our angle: personal, photographic, cinematic — make them feel like they're already on the trail.
+
+## Villalago + Lago di San Domenico — Abruzzo's Hidden Bear Country
+
+**Search intent:** Informational/experiential — travellers searching for hidden Abruzzo villages, hiking near Scanno, and Marsican brown bear territory.
+
+**Primary keyword:** Villalago Abruzzo
+**Secondary keywords:** Lago di San Domenico, Eremo di San Domenico, hiking Abruzzo, Marsican brown bear, Sagittario Gorges
+**LSI/semantic:** hidden Italy, Abruzzo national park, Scanno area, Italian mountain village, off the beaten path Italy, bear country Italy
+
+**H2 Outline:**
+1. Hook — bear murals, emerald lakes, and a hermit's cave
+2. What Is Villalago? — tiny village, bear country, gateway to the gorges
+3. Lago di San Domenico — the emerald lake with the hermitage
+4. The Bear Story — Marsican brown bear, only ~60 left, village identity
+5. The Walk — Villalago to Lago di San Domenico loop
+6. Practical info (getting there, where to stay, best season)
+7. Part of the Abruzzo series — links to other articles
+
+**Competitors to beat:** Generic travel blog lists. Our angle: personal experience + bear conservation story + stunning photos.
