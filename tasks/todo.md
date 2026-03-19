@@ -23,3 +23,23 @@
 10. Flor's Take
 
 **Competitors to beat:** Generic "what is DefiLlama" posts that just describe the homepage. Our angle: practical use cases for both analysts AND compliance professionals.
+
+## Mġarr to Xlendi Coastal Hike — Gozo's Best-Kept Walk
+
+**Search intent:** Informational/experiential — hikers and Malta tourists searching for Gozo walking routes, coastal trails, and off-the-beaten-path experiences.
+
+**Primary keyword:** Mgarr to Xlendi hike Gozo
+**Secondary keywords:** Gozo coastal walk, Mgarr ix-Xini hike, hiking in Gozo, Xlendi walk, Gozo walking trail
+**LSI/semantic:** Mediterranean hiking, Maltese Islands trail, Brad Pitt By the Sea filming location, Sanap Cliffs, Gozo south coast, coastal path Gozo
+
+**H2 Outline:**
+1. The Hook — ferry to Xlendi, Gozo's cinematic south coast
+2. The Route at a Glance — distance, time, difficulty, quick stats
+3. Interactive Map
+4. Section-by-section trail breakdown (Mġarr harbour → Mġarr ix-Xini → Sanap Cliffs → Xlendi)
+5. The Hollywood Connection — By the Sea filming location
+6. What to Bring
+7. Getting There & Getting Back
+8. Why This Walk
+
+**Competitors to beat:** Generic AllTrails listings with no story. Our angle: personal, photographic, cinematic — make them feel like they're already on the trail.

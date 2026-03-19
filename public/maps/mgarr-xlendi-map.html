@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mgarr to Xlendi Coastal Hike — Trail Map | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+  .info-card { background: #141414; border: 1px solid #222; border-radius: 8px; padding: 16px; }
+  .info-card h3 { font-size: 0.85rem; color: #00e5ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .info-card p { font-size: 0.95rem; color: #eee; line-height: 1.5; }
+  .info-card a { color: #ff2d78; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>Mgarr to Xlendi Coastal Hike — Trail Map</h2>
+  <div id="map"></div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ff2d78;"></div>
+      <span>Key Stops</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #00e5ff;"></div>
+      <span>Swim Spots</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ffd600;"></div>
+      <span>Landmarks</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background: #ff2d78;"></div>
+      <span>Hiking Trail (~12 km)</span>
+    </div>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">
+      <h3>Start: Mgarr Harbour</h3>
+      <p>36.0258°N, 14.2993°E<br><a href="https://www.google.com/maps/search/?api=1&query=36.0258,14.2993" target="_blank">Open in Google Maps</a></p>
+    </div>
+    <div class="info-card">
+      <h3>End: Xlendi Bay</h3>
+      <p>36.0282°N, 14.2147°E<br><a href="https://www.google.com/maps/search/?api=1&query=36.0282,14.2147" target="_blank">Open in Google Maps</a></p>
+    </div>
+    <div class="info-card">
+      <h3>Distance</h3>
+      <p>~12 km point-to-point. Budget 3.5-4.5 hours with stops for photos and swimming.</p>
+    </div>
+    <div class="info-card">
+      <h3>Getting Back</h3>
+      <p>Bus 306 from Xlendi to Victoria, then 301 to Mgarr. Or pre-book a taxi (~15 min).</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var map = L.map('map', {
+  scrollWheelZoom: false
+}).setView([36.035, 14.255], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, color, size) {
+  size = size || 28;
+  return L.divIcon({
+    html: '<div style="background:' + color + ';width:' + size + 'px;height:' + size + 'px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:' + (size - 14) + 'px;box-shadow:0 2px 8px ' + color + '80;">' + emoji + '</div>',
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2],
+    className: ''
+  });
+}
+
+// === MARKERS ===
+
+// Mgarr Harbour (start)
+L.marker([36.0258, 14.2993], {icon: makeIcon('🚢', '#ff2d78', 30)}).addTo(map)
+  .bindPopup('<strong>Mgarr Harbour (Start)</strong><br>Gozo ferry terminal. Your hike begins here.<div class="popup-detail">Head south along the coast road, then pick up the trail toward Mgarr ix-Xini.</div>');
+
+// Mgarr ix-Xini
+L.marker([36.0195, 14.2865], {icon: makeIcon('🏖️', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Mgarr ix-Xini</strong><br>Dramatic inlet, turquoise water, and Hollywood history.<div class="popup-detail">Filming location for "By the Sea" (2015) starring Brad Pitt and Angelina Jolie. Perfect swim stop.</div>');
+
+// Mgarr ix-Xini Tower
+L.marker([36.0185, 14.2845], {icon: makeIcon('🏰', '#ffd600', 24)}).addTo(map)
+  .bindPopup('<strong>Mgarr ix-Xini Tower</strong><br>17th-century watchtower overlooking the inlet.<div class="popup-detail">One of Gozo\'s coastal defence towers. Great viewpoint over the bay.</div>');
+
+// Ta' Cenc area
+L.marker([36.0210, 14.2650], {icon: makeIcon('🪨', '#ffd600', 24)}).addTo(map)
+  .bindPopup('<strong>Ta\' Cenc Cliffs</strong><br>Gozo\'s highest sea cliffs at 130 metres.<div class="popup-detail">Dramatic limestone plateau. Watch for peregrine falcons and blue rock thrush.</div>');
+
+// Sanap Cliffs
+L.marker([36.0245, 14.2350], {icon: makeIcon('🌅', '#ffd600', 26)}).addTo(map)
+  .bindPopup('<strong>Sanap Cliffs</strong><br>Golden limestone walls dropping into deep blue.<div class="popup-detail">Best section for photos, especially in late afternoon light. Unguarded edges — stay alert.</div>');
+
+// Xlendi (end)
+L.marker([36.0282, 14.2147], {icon: makeIcon('🍺', '#ff2d78', 30)}).addTo(map)
+  .bindPopup('<strong>Xlendi Bay (Finish)</strong><br>Your reward. Cold drink, swim, and sunset.<div class="popup-detail">Small fishing village with waterfront restaurants. Bus back to Victoria or pre-book a taxi.</div>');
+
+// Xlendi Tower
+L.marker([36.0265, 14.2175], {icon: makeIcon('🏰', '#ffd600', 22)}).addTo(map)
+  .bindPopup('<strong>Xlendi Tower</strong><br>Coastal watchtower above Xlendi Bay.<div class="popup-detail">Built 1650. Overlooks the bay entrance — great final viewpoint before descending.</div>');
+
+// === HIKING TRAIL ===
+var hikingTrail = [
+  // Mgarr Harbour
+  [36.0258, 14.2993],
+  [36.0248, 14.2975],
+  [36.0238, 14.2955],
+  [36.0228, 14.2935],
+  // Head south toward Mgarr ix-Xini
+  [36.0220, 14.2915],
+  [36.0210, 14.2895],
+  [36.0200, 14.2878],
+  [36.0195, 14.2865],
+  // Mgarr ix-Xini inlet
+  [36.0188, 14.2850],
+  [36.0185, 14.2840],
+  // Climb out west along south coast
+  [36.0190, 14.2820],
+  [36.0195, 14.2800],
+  [36.0200, 14.2775],
+  [36.0205, 14.2750],
+  // Ta' Cenc plateau area
+  [36.0208, 14.2720],
+  [36.0210, 14.2690],
+  [36.0210, 14.2650],
+  [36.0212, 14.2620],
+  // Along the south coast
+  [36.0215, 14.2590],
+  [36.0218, 14.2560],
+  [36.0220, 14.2530],
+  [36.0225, 14.2500],
+  [36.0228, 14.2470],
+  [36.0232, 14.2440],
+  [36.0235, 14.2410],
+  // Sanap Cliffs
+  [36.0240, 14.2380],
+  [36.0245, 14.2350],
+  [36.0248, 14.2320],
+  [36.0252, 14.2290],
+  // Approach Xlendi
+  [36.0258, 14.2260],
+  [36.0262, 14.2230],
+  [36.0268, 14.2200],
+  [36.0275, 14.2175],
+  // Xlendi Bay
+  [36.0282, 14.2147]
+];
+
+L.polyline(hikingTrail, {
+  color: '#ff2d78',
+  weight: 4,
+  opacity: 0.85
+}).addTo(map).bindPopup('<strong>Mgarr to Xlendi Trail</strong><br>~12 km, 3.5-4.5 hours point-to-point.<div class="popup-detail">Coastal trail along Gozo\'s dramatic south coast. Mix of dirt paths, rocky terrain, and quiet country lanes.</div>');
+
+// Fit map to trail
+var bounds = L.latLngBounds(hikingTrail);
+map.fitBounds(bounds, {padding: [40, 40]});
+</script>
+</body>
+</html>
