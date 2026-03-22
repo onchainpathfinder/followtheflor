@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scanno, Fara San Martino & Pietracupa Map | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>Scanno, Fara San Martino & Pietracupa</h2>
+  <div id="map"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background: #ff2d78;"></div><span>Villages</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #00e5ff;"></div><span>Lakes & Water</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #ffd600;"></div><span>Hikes & Gorges</span></div>
+    <div class="legend-item"><div class="legend-line" style="background: #ff2d78; opacity: 0.5;"></div><span>Driving Route</span></div>
+  </div>
+</div>
+<script>
+var map = L.map('map', { scrollWheelZoom: false }).setView([41.9, 14.1], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, color) {
+  return L.divIcon({
+    html: '<div style="background:'+color+';width:28px;height:28px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.4);">'+emoji+'</div>',
+    iconSize: [28, 28], iconAnchor: [14, 14], className: ''
+  });
+}
+
+L.marker([41.9040, 13.8810], {icon: makeIcon('💚', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Scanno</strong><br>Medieval village with heart-shaped lake<div class="popup-detail">GPS: 41.9040°N, 13.8810°E</div>');
+
+L.marker([41.9280, 13.8650], {icon: makeIcon('🛶', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Lago di Scanno</strong><br>Heart-shaped lake — kayak rental at the beach<div class="popup-detail">Largest natural lake in Abruzzo, 922m altitude</div>');
+
+L.marker([41.9050, 13.8570], {icon: makeIcon('🐻', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Villalago</strong><br>Bear country — Lago di San Domenico<div class="popup-detail">15 min from Scanno</div>');
+
+L.marker([42.0830, 14.1720], {icon: makeIcon('🏔️', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Fara San Martino — Gorge</strong><br>Gorge hike to monastery ruins (~4km return)<div class="popup-detail">Birthplace of De Cecco pasta. Check water levels!</div>');
+
+L.marker([41.6780, 14.4870], {icon: makeIcon('⛪', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Pietracupa</strong><br>The little Bethlehem — cave church in giant rock<div class="popup-detail">In Molise, 30 min from Fara San Martino</div>');
+
+L.marker([42.0480, 13.9260], {icon: makeIcon('🍬', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Sulmona</strong><br>Base town — confetti capital, Ovid\'s birthplace<div class="popup-detail">Central to all three destinations</div>');
+
+var route = [
+  [42.0480, 13.9260],
+  [41.9040, 13.8810],
+  [41.9050, 13.8570],
+  [42.0830, 14.1720],
+  [41.6780, 14.4870]
+];
+L.polyline(route, { color: '#ff2d78', weight: 3, opacity: 0.4, dashArray: '10, 8' }).addTo(map);
+map.fitBounds(L.latLngBounds(route), {padding: [40, 40]});
+</script>
+</body>
+</html>

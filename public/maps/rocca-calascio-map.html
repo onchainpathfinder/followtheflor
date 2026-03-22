@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rocca Calascio, Santo Stefano & Campo Imperatore Map | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>Rocca Calascio, Santo Stefano & Campo Imperatore</h2>
+  <div id="map"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background: #ff2d78;"></div><span>Main Stops</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #00e5ff;"></div><span>Parking</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #ffd600;"></div><span>Key Landmarks</span></div>
+    <div class="legend-item"><div class="legend-line" style="background: #ff2d78; opacity: 0.5;"></div><span>Driving Route</span></div>
+  </div>
+</div>
+<script>
+var map = L.map('map', { scrollWheelZoom: false }).setView([42.47, 13.63], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap', maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, color) {
+  return L.divIcon({
+    html: '<div style="background:'+color+';width:28px;height:28px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.4);">'+emoji+'</div>',
+    iconSize: [28, 28], iconAnchor: [14, 14], className: ''
+  });
+}
+
+L.marker([42.4935, 13.6905], {icon: makeIcon('🏰', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Rocca Calascio Fortress</strong><br>1,460m — highest fortress in the Apennines<div class="popup-detail">30-40 min hike from car park</div>');
+
+L.marker([42.4890, 13.6870], {icon: makeIcon('⛪', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Santa Maria della Pietà</strong><br>16th-century octagonal church<div class="popup-detail">Filming location for The Name of the Rose</div>');
+
+L.marker([42.4860, 13.6830], {icon: makeIcon('🅿️', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Car Park</strong><br>Free parking below the old village<div class="popup-detail">GPS: 42.4860°N, 13.6830°E</div>');
+
+L.marker([42.4875, 13.6440], {icon: makeIcon('🏘️', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Santo Stefano di Sessanio</strong><br>Restored medieval borgo<div class="popup-detail">15 min drive from Rocca Calascio</div>');
+
+L.marker([42.4480, 13.5620], {icon: makeIcon('🏔️', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Campo Imperatore</strong><br>Italy\'s Little Tibet — 1,800m plateau<div class="popup-detail">30 min drive from Santo Stefano</div>');
+
+L.marker([42.3540, 13.3950], {icon: makeIcon('🏙️', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>L\'Aquila</strong><br>Nearest city — 30 min to Rocca Calascio<div class="popup-detail">Regional capital, base option</div>');
+
+var route = [
+  [42.3540, 13.3950],
+  [42.4875, 13.6440],
+  [42.4935, 13.6905],
+  [42.4480, 13.5620]
+];
+L.polyline(route, { color: '#ff2d78', weight: 3, opacity: 0.4, dashArray: '10, 8' }).addTo(map);
+map.fitBounds(L.latLngBounds(route), {padding: [40, 40]});
+</script>
+</body>
+</html>

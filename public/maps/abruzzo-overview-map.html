@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abruzzo Complete Guide Map | followtheflor.com</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #fff; }
+  #map { width: 100%; height: 500px; border-radius: 12px; border: 2px solid #ff2d78; }
+  .map-container { padding: 20px; max-width: 900px; margin: 0 auto; }
+  h2 { font-size: 1.4rem; margin-bottom: 12px; color: #ff2d78; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px; padding: 16px; background: #141414; border-radius: 8px; border: 1px solid #222; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #ccc; }
+  .legend-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .legend-line { width: 24px; height: 4px; border-radius: 2px; flex-shrink: 0; }
+  .leaflet-popup-content-wrapper { background: #1a1a1a; color: #fff; border-radius: 8px; border: 1px solid #ff2d78; }
+  .leaflet-popup-tip { background: #1a1a1a; }
+  .leaflet-popup-content { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; line-height: 1.5; }
+  .leaflet-popup-content strong { color: #ff2d78; }
+  .leaflet-popup-content .popup-detail { color: #aaa; font-size: 12px; margin-top: 4px; }
+  .leaflet-popup-content a { color: #00e5ff; }
+  @media (max-width: 600px) { #map { height: 400px; } .legend { flex-direction: column; gap: 10px; } }
+</style>
+</head>
+<body>
+<div class="map-container">
+  <h2>Abruzzo — All Places in the Series</h2>
+  <div id="map"></div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background: #ff2d78;"></div><span>Mountains & Fortresses</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #00e5ff;"></div><span>Lakes & Gorges</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background: #ffd600;"></div><span>Coast & Towns</span></div>
+    <div class="legend-item"><div class="legend-line" style="background: #ff2d78; opacity: 0.5;"></div><span>Suggested Route</span></div>
+  </div>
+</div>
+
+<script>
+var map = L.map('map', { scrollWheelZoom: false }).setView([42.15, 13.9], 9);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18
+}).addTo(map);
+
+function makeIcon(emoji, color) {
+  return L.divIcon({
+    html: '<div style="background:'+color+';width:30px;height:30px;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.4);">'+emoji+'</div>',
+    iconSize: [30, 30], iconAnchor: [15, 15], className: ''
+  });
+}
+
+// Mountains & Fortresses (pink)
+L.marker([42.4935, 13.6905], {icon: makeIcon('🏰', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Rocca Calascio</strong><br>Highest fortress in the Apennines (1,460m)<div class="popup-detail"><a href="/explores/rocca-calascio-abruzzo">Read the article →</a></div>');
+
+L.marker([42.4875, 13.6440], {icon: makeIcon('🏘️', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Santo Stefano di Sessanio</strong><br>Restored medieval borgo with scattered hotel<div class="popup-detail"><a href="/explores/rocca-calascio-abruzzo">Read the article →</a></div>');
+
+L.marker([42.4480, 13.5620], {icon: makeIcon('🏔️', '#ff2d78')}).addTo(map)
+  .bindPopup('<strong>Campo Imperatore</strong><br>Italy\'s Little Tibet — high-altitude plateau at 1,800m<div class="popup-detail"><a href="/explores/rocca-calascio-abruzzo">Read the article →</a></div>');
+
+// Lakes & Gorges (cyan)
+L.marker([41.9050, 13.8570], {icon: makeIcon('🐻', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Villalago</strong><br>Bear country, emerald lake, Sagittario Gorges<div class="popup-detail"><a href="/explores/villalago-abruzzo">Read the article →</a></div>');
+
+L.marker([41.9040, 13.8810], {icon: makeIcon('💚', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Scanno & Lago di Scanno</strong><br>Heart-shaped lake, medieval village, kayaking<div class="popup-detail"><a href="/explores/scanno-fara-san-martino-abruzzo">Read the article →</a></div>');
+
+L.marker([42.0830, 14.1720], {icon: makeIcon('🏔️', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Fara San Martino</strong><br>Gorge hike, monastery ruins, birthplace of De Cecco pasta<div class="popup-detail"><a href="/explores/scanno-fara-san-martino-abruzzo">Read the article →</a></div>');
+
+L.marker([41.6780, 14.4870], {icon: makeIcon('⛪', '#00e5ff')}).addTo(map)
+  .bindPopup('<strong>Pietracupa</strong><br>The little Bethlehem — village built around a giant rock<div class="popup-detail"><a href="/explores/scanno-fara-san-martino-abruzzo">Read the article →</a></div>');
+
+// Coast & Towns (gold)
+L.marker([42.1760, 14.3930], {icon: makeIcon('🎣', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Costa dei Trabocchi</strong><br>Ancient fishing platforms, seafood restaurants over the sea<div class="popup-detail"><a href="/explores/trabocchi-sulmona-abruzzo">Read the article →</a></div>');
+
+L.marker([42.5780, 13.9790], {icon: makeIcon('🌅', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Atri Calanchi</strong><br>Badlands nature reserve — best at sunset<div class="popup-detail"><a href="/explores/trabocchi-sulmona-abruzzo">Read the article →</a></div>');
+
+L.marker([42.0480, 13.9260], {icon: makeIcon('🍬', '#ffd600')}).addTo(map)
+  .bindPopup('<strong>Sulmona</strong><br>Ovid\'s birthplace, confetti capital, gateway to Majella<div class="popup-detail"><a href="/explores/trabocchi-sulmona-abruzzo">Read the article →</a></div>');
+
+// Suggested driving route
+var route = [
+  [42.5780, 13.9790], // Atri
+  [42.4935, 13.6905], // Rocca Calascio
+  [42.4480, 13.5620], // Campo Imperatore
+  [42.4875, 13.6440], // Santo Stefano
+  [42.0480, 13.9260], // Sulmona
+  [41.9050, 13.8570], // Villalago
+  [41.9040, 13.8810], // Scanno
+  [42.0830, 14.1720], // Fara San Martino
+  [41.6780, 14.4870], // Pietracupa
+  [42.1760, 14.3930], // Trabocchi Coast
+];
+
+L.polyline(route, {
+  color: '#ff2d78', weight: 3, opacity: 0.4, dashArray: '10, 8'
+}).addTo(map);
+
+map.fitBounds(L.latLngBounds(route), {padding: [40, 40]});
+</script>
+</body>
+</html>
