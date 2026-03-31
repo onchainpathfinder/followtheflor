@@ -11,6 +11,7 @@ export interface PostMeta {
   primaryKeyword: string
   readingTime: string
   slug: string
+  region?: string
 }
 
 const contentDir = path.join(process.cwd(), 'content')
@@ -49,6 +50,7 @@ export function getPostsByPillar(pillar: string): PostMeta[] {
         primaryKeyword: data.primaryKeyword || '',
         readingTime: data.readingTime || '',
         slug,
+        region: data.region || undefined,
       } as PostMeta
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -75,9 +77,14 @@ export function getPostBySlug(
       primaryKeyword: data.primaryKeyword || '',
       readingTime: data.readingTime || '',
       slug,
+      region: data.region || undefined,
     },
     content,
   }
+}
+
+export function getPostsByPillarAndRegion(pillar: string, region: string): PostMeta[] {
+  return getPostsByPillar(pillar).filter((post) => post.region === region)
 }
 
 export function getPostSlugs(pillar: string): string[] {
