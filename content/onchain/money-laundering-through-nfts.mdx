@@ -51,7 +51,7 @@ Every NFT trade on Ethereum boils down to a single contract call: `transferFrom(
 
 That atomicity is what makes wash trading cheap. A launderer writes a single contract call that:
 
-1. Borrows ETH from Aave (`flashLoan(amount)`),
+1. Borrows ETH via flash loan (Compound, Aave, or dYdX all support this),
 2. Calls Seaport's `fulfillOrder` to "buy" their own listed NFT,
 3. Repays the flash loan with a 0.09% fee — all before the block closes.
 
@@ -200,7 +200,7 @@ WHERE fl.borrower = t.buyer
 
 The tell: a flash loan `borrow` and an NFT `purchase` inside the same `tx_hash`. Because flash loans must repay in one transaction, the `borrower` and the `buyer` being identical is near-definitive proof of a self-trade with borrowed capital.
 
-What this looks like in practice: the infamous **CryptoPunk #9998** "sale" for $532M in October 2021. One wallet borrowed 124,457 ETH via flash loan, bought the Punk from itself at that price, returned the Punk, and repaid the loan — all in Ethereum block #13472494. The wallet never owned $532M. The "sale" existed for exactly one block, long enough for it to appear in CryptoPunks' sales feed and news headlines. Zero capital at risk, infinite apparent valuation. If you ever see a nine-figure NFT headline, check if the buyer and seller transaction came from the same address inside a single block — they almost always do.
+What this looks like in practice: the infamous **CryptoPunk #9998** "sale" for $532M on 28 October 2021. One wallet flash-borrowed 124,457 ETH (87,000 of it from Compound, the rest from other pools), "bought" the Punk from itself at that price, sent the 124,457 ETH straight back to the buyer, repaid the loans, and returned the Punk to the original wallet — all in a single block. The wallet never owned $532M. Larva Labs confirmed the trade looked like a wash sale; the transaction was real on-chain but the ownership change was fictional. If you ever see a nine-figure NFT headline, check whether the buyer-to-seller ETH movement and the NFT-back-to-origin transfer are in the same block — they almost always are.
 
 When @hildobby's dashboard reports $35.6B in wash trading, it means $35.6B of trades triggered at least one of those five flags. Fork the Spellbook query on Dune, swap the date filter, and you can reproduce every number in this article.
 
@@ -324,7 +324,7 @@ This isn't hypothetical:
 - **Frosties rug pull** — $1.1M stolen, both creators charged with wire fraud and money laundering conspiracy.
 - **Lazarus Group** — North Korea's hackers ran 500+ phishing domains targeting NFT holders, laundered through Tornado Cash.
 
-Chainalysis identified 262 wallets wash-trading NFTs. One wallet made 830 self-trades. Elliptic documented $100M+ in NFT theft in a single year.
+Chainalysis (2022 Crypto Crime Report) identified 262 users who had each sold an NFT to a self-financed address more than 25 times — their internal threshold for "more likely wash trading than not." Elliptic has separately documented over $100M in NFT theft in a single year.
 
 ---
 
