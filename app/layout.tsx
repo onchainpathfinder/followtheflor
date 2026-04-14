@@ -3,7 +3,7 @@ import "./globals.css"
 import CustomCursor from "@/components/layout/CustomCursor"
 
 export const metadata: Metadata = {
-  title: "FLOR — Fierce minds. Bold moves.",
+  title: "FLOR — Follow the money. Follow the Flor.",
   description:
     "Crypto compliance, fitness, and Mediterranean lifestyle. Real expertise, real life, no corporate BS.",
 }

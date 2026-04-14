@@ -3,7 +3,7 @@
 ## Brand Identity
 - Site: followtheflor.com
 - Author: Flor (Floriana, based in Malta)
-- Tagline: "Fierce minds. Bold moves."
+- Tagline: "Follow the money. Follow the Flor."
 - Positioning: One of the few women in crypto compliance who also lives the lifestyle. Real expertise, real life, no corporate BS.
 
 ## Content Pillars

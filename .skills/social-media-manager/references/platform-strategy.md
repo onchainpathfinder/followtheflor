@@ -60,7 +60,7 @@ Update this as accounts are created and grow:
 ```
 Flor | Running Malta's Hidden Trails
 🏃‍♀️ Runner • 🏊 Sea swimmer • 🇲🇹 Malta local
-Fierce minds. Bold moves.
+Follow the money. Follow the Flor.
 🔗 followtheflor.com
 ```
 
