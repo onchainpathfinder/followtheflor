@@ -74,22 +74,22 @@ Let's look at real data. Open [Dune Analytics](https://dune.com/hildobby/nft-was
 
 The dashboard breaks it down by marketplace. Here's what stands out:
 
-<div style={{overflowX: 'auto', marginBottom: '1.5rem'}}>
-<table style={{width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem'}}>
+<div className="comparison-table-wrapper">
+<table className="comparison-table">
   <thead>
-    <tr style={{borderBottom: '2px solid #ec4899'}}>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Marketplace</th>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Total Volume</th>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Wash Volume %</th>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Wash Trades %</th>
+    <tr>
+      <th>Marketplace</th>
+      <th>Total Volume</th>
+      <th>Wash Volume %</th>
+      <th>Wash Trades %</th>
     </tr>
   </thead>
   <tbody>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>OpenSea</td><td style={{padding: '0.75rem'}}>$123.9M</td><td style={{padding: '0.75rem'}}>4.84%</td><td style={{padding: '0.75rem'}}>9.62%</td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Blur</td><td style={{padding: '0.75rem'}}>$32.5M</td><td style={{padding: '0.75rem'}}>1.54%</td><td style={{padding: '0.75rem'}}>2.44%</td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>CryptoPunks</td><td style={{padding: '0.75rem'}}>$25.8M</td><td style={{padding: '0.75rem'}}>0.94%</td><td style={{padding: '0.75rem'}}>0.89%</td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Magic Eden</td><td style={{padding: '0.75rem'}}>$261K</td><td style={{padding: '0.75rem'}}>6.83%</td><td style={{padding: '0.75rem'}}>6.11%</td></tr>
-    <tr><td style={{padding: '0.75rem'}}>Sudoswap</td><td style={{padding: '0.75rem'}}>$310K</td><td style={{padding: '0.75rem'}}>25.61%</td><td style={{padding: '0.75rem'}}>2.88%</td></tr>
+    <tr><td>OpenSea</td><td>$123.9M</td><td>4.84%</td><td>9.62%</td></tr>
+    <tr><td>Blur</td><td>$32.5M</td><td>1.54%</td><td>2.44%</td></tr>
+    <tr><td>CryptoPunks</td><td>$25.8M</td><td>0.94%</td><td>0.89%</td></tr>
+    <tr><td>Magic Eden</td><td>$261K</td><td>6.83%</td><td>6.11%</td></tr>
+    <tr><td>Sudoswap</td><td>$310K</td><td>25.61%</td><td>2.88%</td></tr>
   </tbody>
 </table>
 </div>
@@ -121,7 +121,9 @@ FROM nft.trades
 WHERE buyer = seller
 ```
 
-Literally the same address on both sides of the trade. Trivial to write, trivial to detect — which is why this one only catches the laziest launderers. Most marketplaces (OpenSea's Seaport included) reject self-trades at the contract level, but some platforms don't validate, and launderers know which.
+Literally the same address on both sides of the trade. What it looks like in practice: a single wallet lists an NFT for 50 ETH, then fulfils its own listing in the next block. Etherscan shows the same address in both the `from` and `to` fields of the Seaport `OrderFulfilled` event.
+
+This catches the laziest launderers. Most reputable marketplaces (OpenSea's Seaport, Blur) reject self-trades at the contract level by checking `msg.sender != order.offerer`. But smaller platforms — and especially ones offering trading-volume rewards — often don't validate, and launderers know exactly which.
 
 **Filter 2 — Back & Forth**
 
@@ -142,6 +144,8 @@ HAVING ping_pong_count >= 2
 
 The `LEAST`/`GREATEST` trick normalises the pair so (A→B) and (B→A) cluster into the same bucket. Any `token_id` traded twice or more between the same two addresses is flagged.
 
+What this looks like in practice: Wallet A "sells" NFT #4207 to Wallet B for 10 ETH. Two hours later, Wallet B "sells" it back to Wallet A for 12 ETH. Repeat. Each hop inflates the reported price. On Etherscan, you'll see the same two addresses alternating in the transfer history — and if you click into either wallet, they typically share the same funder (see Filter 4) or one funds the other directly.
+
 **Filter 3 — Rapid Flip**
 
 ```sql
@@ -155,6 +159,8 @@ HAVING flip_count >= 3 AND price_multiple > 5
 ```
 
 Three or more trades of the same token inside an hour, with a 5× price jump from low to high. Legitimate markets don't move that fast.
+
+What this looks like in practice: NFT #9821 sells for 0.5 ETH at 14:02, 2 ETH at 14:17, and 10 ETH at 14:41 — all between different-looking wallets. A real collector didn't just 20× their valuation in 40 minutes. This pattern is the classic "pump" phase used right before a real victim buyer gets onboarded: the launderer needs a credible recent price history to justify the exit sale.
 
 **Filter 4 — Same-Funder Wallets**
 
@@ -179,6 +185,8 @@ WHERE b.funder = s.funder
 
 Look at where each wallet *first received ETH*. If buyer and seller were both funded by the same upstream address — and that address isn't a CEX hot wallet (Coinbase, Binance, etc.) — they're almost certainly the same person. The CEX exclusion is critical: millions of wallets get first funded by Binance 15, and that isn't wash trading.
 
+What this looks like in practice: two wallets (`0xAAA...` and `0xBBB...`) that have never interacted with each other except through NFT trades. Individually they look like strangers. But trace each one back one hop: both received their first 0.1 ETH from `0xCCC...` within minutes of each other. `0xCCC...` isn't labelled as any exchange. That's a creator wallet spinning up two "clean" trading wallets to simulate market activity. This is the hardest pattern for a casual observer to spot — and the most common in sophisticated laundering operations.
+
 **Filter 5 — Flash Loan Self-Trade**
 
 ```sql
@@ -191,6 +199,8 @@ WHERE fl.borrower = t.buyer
 ```
 
 The tell: a flash loan `borrow` and an NFT `purchase` inside the same `tx_hash`. Because flash loans must repay in one transaction, the `borrower` and the `buyer` being identical is near-definitive proof of a self-trade with borrowed capital.
+
+What this looks like in practice: the infamous **CryptoPunk #9998** "sale" for $532M in October 2021. One wallet borrowed 124,457 ETH via flash loan, bought the Punk from itself at that price, returned the Punk, and repaid the loan — all in Ethereum block #13472494. The wallet never owned $532M. The "sale" existed for exactly one block, long enough for it to appear in CryptoPunks' sales feed and news headlines. Zero capital at risk, infinite apparent valuation. If you ever see a nine-figure NFT headline, check if the buyer and seller transaction came from the same address inside a single block — they almost always do.
 
 When @hildobby's dashboard reports $35.6B in wash trading, it means $35.6B of trades triggered at least one of those five flags. Fork the Spellbook query on Dune, swap the date filter, and you can reproduce every number in this article.
 
@@ -279,51 +289,22 @@ In practice, FATF flagged NFT marketplaces as a potential gap in the AML framewo
 
 The key FATF principle: **substance over form.** If something functions as a value transfer mechanism, it should be regulated as one — regardless of whether it's called an "NFT" or a "digital collectible."
 
-### United States — DOJ, FinCEN, and the SEC
+### Beyond the EU
 
-The US approach is enforcement-led rather than framework-led. There's no comprehensive NFT regulation, but multiple agencies have made clear they're watching:
+Outside Europe, the picture fragments. The **US** is enforcement-led without a framework: DOJ has prosecuted specific cases (Frosties rug pull, Chastain insider trading), OFAC sanctions hit the Lazarus Group's Tornado Cash laundering, and the SEC signals some NFTs are securities under Howey — but FinCEN has not classified NFT marketplaces as MSBs, and OpenSea/Blur/Magic Eden don't file SARs.
 
-- **DOJ** has prosecuted NFT fraud cases: the Frosties rug pull ($1.1M, wire fraud + money laundering conspiracy), the Nathaniel Chastain insider trading case (first NFT insider trading prosecution, 2022), and multiple cases involving NFT-related sanctions evasion.
-- **FinCEN** has not issued binding guidance specifically classifying NFT marketplaces as money services businesses (MSBs). In practice, most major NFT platforms (OpenSea, Blur, Magic Eden) are **not** registered as MSBs and don't operate under BSA obligations. FinCEN's 2019 CVC guidance leaves the door open for enforcement where a platform facilitates convertible virtual currency exchange — but to date, that door hasn't been walked through for NFT marketplaces. Treasury's 2022 study flagged the risk; no formal rulemaking has followed.
-- **SEC** has signalled that some NFTs may qualify as securities, particularly fractionalised NFTs or those sold with an expectation of profit. The Howey test doesn't care what you call the asset.
-- **OFAC** sanctions apply regardless: the Lazarus Group's NFT-related laundering through Tornado Cash resulted in sanctions that affected the entire ecosystem.
-
-### Malta — MFSA and the VFA Framework
-
-Malta's Virtual Financial Assets Act (VFA Act, 2018) was ahead of its time. The **MFSA** (Malta Financial Services Authority) regulates VFA service providers with AML/CFT obligations aligned to FATF standards.
-
-Under the Maltese framework, NFTs fall into a grey area — they're not explicitly classified as VFAs unless they carry rights similar to financial instruments. However, any Maltese-licensed entity facilitating NFT trades or custody is subject to full AML obligations under the Prevention of Money Laundering Act (PMLA).
-
-Malta's **FIAU** (Financial Intelligence Analysis Unit) has issued guidance on virtual asset risks, and compliance teams at Maltese CASPs are expected to monitor for NFT-related typologies — including wash trading, rapid value inflation, and layering through NFT marketplaces.
-
-### The Bottom Line
-
-The regulatory picture is fragmented, but the direction is clear: obligations are expanding, enforcement is accelerating, and the "NFTs aren't regulated" argument has a rapidly shrinking shelf life. If you're at a CASP that processes any NFT-adjacent transactions — even fiat off-ramps from marketplace payouts — your AML obligations are already in play.
+The direction of travel is the same everywhere: obligations are expanding, enforcement is accelerating, and the "NFTs aren't regulated" argument has a rapidly shrinking shelf life. If you're at an EU CASP that processes any NFT-adjacent transactions — even fiat off-ramps from marketplace payouts — your AML obligations are already in play.
 
 ---
 
-## Step 6: Know the Red Flags
+## Step 6: Red Flags in One Glance
 
-If you're monitoring NFT-related activity at a CASP, exchange, or payment provider, here's what should trigger enhanced due diligence:
+If you're monitoring NFT-related activity at an EU CASP, the five typologies above ARE the red flags — now operationalised. A few extras worth flagging in transaction monitoring:
 
-**Transaction red flags:**
-- Customer deposits large amounts of crypto, immediately purchases high-value NFTs
-- NFT sales generate proceeds significantly above original purchase price within a short timeframe
-- Funds from NFT sales are immediately withdrawn to fiat or moved to a different platform
-- Multiple NFTs purchased and sold in rapid succession with no collecting interest
-- Customer uses multiple wallets to interact with the same collection
-
-**Customer red flags:**
-- No apparent interest in the art itself — no social presence, no collector community
-- Unable to explain rationale for high-value purchases
-- Newly created account with minimal verification history
-- Transactions routed through jurisdictions with weak AML frameworks
-
-**On-chain red flags:**
-- NFT collections with low holder counts but high reported volume
-- Top holders are wallet clusters (check with [Bubblemaps](https://bubblemaps.io))
-- Sudden volume spikes on previously dormant collections
-- Creator wallets that fund buyer wallets
+- Customer deposits, immediately buys high-value NFTs, immediately withdraws proceeds to fiat
+- No apparent collecting interest: no social presence, no community, no engagement beyond transactions
+- Collections with low holder counts but high reported volume (check [Bubblemaps](https://bubblemaps.io) for cluster shape)
+- Sudden volume spikes on previously dormant collections — often the layering phase just started
 
 ---
 
@@ -363,22 +344,22 @@ If you're working at a CASP that touches NFT transactions — even indirectly �
 
 Everything I walked through in this article is free and public:
 
-<div style={{overflowX: 'auto', marginBottom: '1.5rem'}}>
-<table style={{width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem'}}>
+<div className="comparison-table-wrapper">
+<table className="comparison-table">
   <thead>
-    <tr style={{borderBottom: '2px solid #ec4899'}}>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Tool</th>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>What It Does</th>
-      <th style={{padding: '0.75rem', textAlign: 'left'}}>Link</th>
+    <tr>
+      <th>Tool</th>
+      <th>What It Does</th>
+      <th>Link</th>
     </tr>
   </thead>
   <tbody>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Dune Analytics</td><td style={{padding: '0.75rem'}}>Query on-chain data, wash trading dashboards</td><td style={{padding: '0.75rem'}}><a href="https://dune.com/hildobby/nft-wash-trading">dune.com/hildobby</a></td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Etherscan</td><td style={{padding: '0.75rem'}}>Explore wallets, transactions, NFT transfers</td><td style={{padding: '0.75rem'}}><a href="https://etherscan.io">etherscan.io</a></td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Bubblemaps</td><td style={{padding: '0.75rem'}}>Visualise wallet clusters and holder distribution</td><td style={{padding: '0.75rem'}}><a href="https://bubblemaps.io">bubblemaps.io</a></td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Chainalysis Blog</td><td style={{padding: '0.75rem'}}>Annual crypto crime reports with NFT data</td><td style={{padding: '0.75rem'}}><a href="https://blog.chainalysis.com">blog.chainalysis.com</a></td></tr>
-    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Elliptic</td><td style={{padding: '0.75rem'}}>NFT financial crime reports</td><td style={{padding: '0.75rem'}}><a href="https://elliptic.co">elliptic.co</a></td></tr>
-    <tr><td style={{padding: '0.75rem'}}>FATF Guidance</td><td style={{padding: '0.75rem'}}>Virtual asset regulatory framework</td><td style={{padding: '0.75rem'}}><a href="https://fatf-gafi.org">fatf-gafi.org</a></td></tr>
+    <tr><td>Dune Analytics</td><td>Query on-chain data, wash trading dashboards</td><td><a href="https://dune.com/hildobby/nft-wash-trading">dune.com/hildobby</a></td></tr>
+    <tr><td>Etherscan</td><td>Explore wallets, transactions, NFT transfers</td><td><a href="https://etherscan.io">etherscan.io</a></td></tr>
+    <tr><td>Bubblemaps</td><td>Visualise wallet clusters and holder distribution</td><td><a href="https://bubblemaps.io">bubblemaps.io</a></td></tr>
+    <tr><td>Chainalysis Blog</td><td>Annual crypto crime reports with NFT data</td><td><a href="https://blog.chainalysis.com">blog.chainalysis.com</a></td></tr>
+    <tr><td>Elliptic</td><td>NFT financial crime reports</td><td><a href="https://elliptic.co">elliptic.co</a></td></tr>
+    <tr><td>FATF Guidance</td><td>Virtual asset regulatory framework</td><td><a href="https://fatf-gafi.org">fatf-gafi.org</a></td></tr>
   </tbody>
 </table>
 </div>
