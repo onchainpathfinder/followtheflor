@@ -32,12 +32,7 @@ The catch: all three wallets belong to the same person.
 
 ![Example NFT PFP — a cute penguin with an orange beanie. Collectible, tradable, and potentially a vehicle for wash trading](/images/onchain/nft-laundering/example-nft-penguin.jpg)
 
-Here's how the three-stage laundering model maps to NFTs, and the five typologies @hildobby's Dune dashboard actually detects on-chain. I walk through each one below:
-
-<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
-  <source src="/videos/onchain/nft-laundering/typologies-walkthrough.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+Mapped to the classic three-stage laundering model:
 
 **Placement.** Illicit funds buy crypto (ETH, SOL, stablecoins). This step is most likely to hit KYC at a centralised exchange — which is why launderers use P2P, DEXs, or pre-loaded wallets.
 
@@ -98,9 +93,16 @@ The percentages vary, but the absolute numbers are staggering. And these are onl
 
 ---
 
-## Step 3: Read the Detection Query
+## Step 3: The 5 Typologies — What the Dashboard Actually Detects
 
-Here's where it gets interesting. Click into the **query editor** on the Dune dashboard and you can see the actual SQL that detects wash trades. In the walkthrough below, I open @hildobby's query and step through what each filter is doing — so even if you've never written SQL, you can follow the detection logic:
+@hildobby's dashboard flags a trade as wash trading when it triggers at least one of five filters. Here's the walkthrough of each one:
+
+<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
+  <source src="/videos/onchain/nft-laundering/typologies-walkthrough.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+Now click into the **query editor** on the Dune dashboard and you can see the actual SQL behind those filters. In this walkthrough I open @hildobby's query and step through what each one is doing — so even if you've never written SQL, you can follow along:
 
 <video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
   <source src="/videos/onchain/nft-laundering/dune-query-walkthrough.mp4" type="video/mp4" />
@@ -214,8 +216,6 @@ Let me show you how to read a wallet on Etherscan — what to look at and what t
   <source src="/videos/onchain/nft-laundering/etherscan-walkthrough.mp4" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
-
-![Etherscan address page showing wallet overview — ETH balance, funding source (Binance 15), transaction count, and multichain portfolio](/images/onchain/nft-laundering/etherscan-wallet-overview.jpg)
 
 Here's how to read the key fields on any wallet:
 
