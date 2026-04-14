@@ -1,0 +1,388 @@
+---
+title: "Money Laundering Through NFTs: The Wash Trading Playbook and How to Spot It"
+description: "A step-by-step walkthrough of how money laundering through NFTs works — with real on-chain data, Dune queries, and Etherscan analysis you can follow along."
+date: "2026-04-14"
+pillar: "onchain"
+category: "aml"
+tags: ["NFT money laundering", "wash trading", "crypto AML", "NFT red flags", "blockchain compliance", "Dune Analytics"]
+primaryKeyword: "money laundering through NFTs"
+readingTime: "12 min read"
+slug: "money-laundering-through-nfts"
+---
+
+*This is a companion article to 7 MINUTE MINT Episode 01. You can follow along with the tools below — everything I show you is free and public.*
+
+---
+
+The traditional art market has been a money laundering vehicle for decades. Subjective valuations, private sales, no real price anchors — the perfect setup for moving dirty money.
+
+NFTs took that model and removed every remaining friction point. No physical transport, no customs, no intermediary. Transactions settle in minutes. And the "value" of a digital artwork? Whatever two wallets agree it is.
+
+Money laundering through NFTs isn't theoretical. It's a $35.6 billion problem. Let me walk you through exactly how it works — and how to spot it on-chain.
+
+---
+
+## Step 1: Understanding the Wash Trading Mechanic
+
+The basic trick is deceptively simple: you buy your own NFT.
+
+Take a PFP collection — cute penguins, anime cats, whatever's trending. Someone mints an NFT from Wallet A, then "sells" it to Wallet B for 5 ETH. Wallet B sells to Wallet C at 15 ETH. The blockchain now shows a digital asset with rising demand and a legitimate-looking sales history.
+
+The catch: all three wallets belong to the same person.
+
+![Example NFT PFP — a cute penguin with an orange beanie. Collectible, tradable, and potentially a vehicle for wash trading](/images/onchain/nft-laundering/example-nft-penguin.jpg)
+
+Here's how the three-stage laundering model maps to NFTs, and the five typologies @hildobby's Dune dashboard actually detects on-chain. I walk through each one below:
+
+<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
+  <source src="/videos/onchain/nft-laundering/typologies-walkthrough.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+**Placement.** Illicit funds buy crypto (ETH, SOL, stablecoins). This step is most likely to hit KYC at a centralised exchange — which is why launderers use P2P, DEXs, or pre-loaded wallets.
+
+**Layering.** The crypto buys NFTs, flips them between self-controlled wallets at inflated prices, cycles through multiple collections. Each trade adds a layer. The NFT is the vehicle — not the destination.
+
+**Integration.** The NFT sells to a real buyer who believes the price history, or the funds extract through a marketplace payout to a bank-connected account. The money is now "art sale proceeds."
+
+### The on-chain mechanic
+
+Every NFT trade on Ethereum boils down to a single contract call: `transferFrom(from, to, tokenId)` on the ERC-721 contract (or `safeTransferFrom` on ERC-1155). Marketplaces like OpenSea's Seaport wrap this in an atomic swap — the NFT transfer and the ETH/WETH payment execute in one transaction, so neither side can rug the other.
+
+That atomicity is what makes wash trading cheap. A launderer writes a single contract call that:
+
+1. Borrows ETH from Aave (`flashLoan(amount)`),
+2. Calls Seaport's `fulfillOrder` to "buy" their own listed NFT,
+3. Repays the flash loan with a 0.09% fee — all before the block closes.
+
+Total cost: gas + a ~9bps flash loan fee. Result: a blockchain-recorded "sale" at whatever price they chose. This is how CryptoPunk #9998 got its $532M "sale" — one wallet, one block, zero capital at risk.
+
+![Example NFT — a cyber cat holding sushi. The value is whatever two wallets agree it is](/images/onchain/nft-laundering/example-nft-cat.jpg)
+
+---
+
+## Step 2: See the Scale on Dune Analytics
+
+Let's look at real data. Open [Dune Analytics](https://dune.com/hildobby/nft-wash-trading) and search for @hildobby's **"EVM NFTs Wash Trading"** dashboard. Here's my walkthrough:
+
+<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
+  <source src="/videos/onchain/nft-laundering/dune-walkthrough.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+**$35.6 billion.** That's the all-time wash trading volume across EVM NFT marketplaces. Not total NFT volume — just the wash trades.
+
+The dashboard breaks it down by marketplace. Here's what stands out:
+
+<div style={{overflowX: 'auto', marginBottom: '1.5rem'}}>
+<table style={{width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem'}}>
+  <thead>
+    <tr style={{borderBottom: '2px solid #ec4899'}}>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Marketplace</th>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Total Volume</th>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Wash Volume %</th>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Wash Trades %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>OpenSea</td><td style={{padding: '0.75rem'}}>$123.9M</td><td style={{padding: '0.75rem'}}>4.84%</td><td style={{padding: '0.75rem'}}>9.62%</td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Blur</td><td style={{padding: '0.75rem'}}>$32.5M</td><td style={{padding: '0.75rem'}}>1.54%</td><td style={{padding: '0.75rem'}}>2.44%</td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>CryptoPunks</td><td style={{padding: '0.75rem'}}>$25.8M</td><td style={{padding: '0.75rem'}}>0.94%</td><td style={{padding: '0.75rem'}}>0.89%</td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Magic Eden</td><td style={{padding: '0.75rem'}}>$261K</td><td style={{padding: '0.75rem'}}>6.83%</td><td style={{padding: '0.75rem'}}>6.11%</td></tr>
+    <tr><td style={{padding: '0.75rem'}}>Sudoswap</td><td style={{padding: '0.75rem'}}>$310K</td><td style={{padding: '0.75rem'}}>25.61%</td><td style={{padding: '0.75rem'}}>2.88%</td></tr>
+  </tbody>
+</table>
+</div>
+
+The percentages vary, but the absolute numbers are staggering. And these are only the detectable wash trades — the ones caught by @hildobby's algorithm.
+
+---
+
+## Step 3: Read the Detection Query
+
+Here's where it gets interesting. Click into the **query editor** on the Dune dashboard and you can see the actual SQL that detects wash trades. In the walkthrough below, I open @hildobby's query and step through what each filter is doing — so even if you've never written SQL, you can follow the detection logic:
+
+<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
+  <source src="/videos/onchain/nft-laundering/dune-query-walkthrough.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+![Dune Analytics query editor showing the SQL code used to detect NFT wash trading patterns across EVM blockchains](/images/onchain/nft-laundering/dune-sql-query.jpg)
+
+The detection logic lives in @hildobby's `nft.wash_trades` Spellbook model (open source on GitHub: `duneanalytics/spellbook`). It's a materialised view built on top of `nft.trades` that flags each row against a series of boolean columns — `is_self_trade`, `is_back_and_forth`, `is_same_funder`, etc. Any row where at least one flag fires is counted as a wash trade.
+
+Let's walk through the actual SQL patterns behind each flag:
+
+**Filter 1 — Buyer = Seller**
+
+```sql
+SELECT *, (buyer = seller) AS is_self_trade
+FROM nft.trades
+WHERE buyer = seller
+```
+
+Literally the same address on both sides of the trade. Trivial to write, trivial to detect — which is why this one only catches the laziest launderers. Most marketplaces (OpenSea's Seaport included) reject self-trades at the contract level, but some platforms don't validate, and launderers know which.
+
+**Filter 2 — Back & Forth**
+
+```sql
+-- Same two wallets, same NFT, traded in both directions
+WITH pairs AS (
+  SELECT nft_contract_address, token_id, buyer, seller,
+    LEAST(buyer, seller) AS wallet_a,
+    GREATEST(buyer, seller) AS wallet_b
+  FROM nft.trades
+)
+SELECT *, COUNT(*) OVER (
+  PARTITION BY nft_contract_address, token_id, wallet_a, wallet_b
+) AS ping_pong_count
+FROM pairs
+HAVING ping_pong_count >= 2
+```
+
+The `LEAST`/`GREATEST` trick normalises the pair so (A→B) and (B→A) cluster into the same bucket. Any `token_id` traded twice or more between the same two addresses is flagged.
+
+**Filter 3 — Rapid Flip**
+
+```sql
+-- Same NFT sold 3+ times within a short window at rising prices
+SELECT token_id, COUNT(*) AS flip_count,
+  MAX(amount_usd) / NULLIF(MIN(amount_usd), 0) AS price_multiple
+FROM nft.trades
+WHERE block_time > NOW() - interval '1' hour
+GROUP BY token_id, nft_contract_address
+HAVING flip_count >= 3 AND price_multiple > 5
+```
+
+Three or more trades of the same token inside an hour, with a 5× price jump from low to high. Legitimate markets don't move that fast.
+
+**Filter 4 — Same-Funder Wallets**
+
+This is the clever one. Trace each trader's funding source one hop back:
+
+```sql
+WITH first_funding AS (
+  SELECT "to" AS wallet,
+    FIRST_VALUE("from") OVER (
+      PARTITION BY "to" ORDER BY block_time
+    ) AS funder
+  FROM ethereum.traces
+  WHERE value > 0
+)
+SELECT t.*, b.funder AS buyer_funder, s.funder AS seller_funder
+FROM nft.trades t
+LEFT JOIN first_funding b ON b.wallet = t.buyer
+LEFT JOIN first_funding s ON s.wallet = t.seller
+WHERE b.funder = s.funder
+  AND b.funder NOT IN (SELECT address FROM labels.cex_hot_wallets)
+```
+
+Look at where each wallet *first received ETH*. If buyer and seller were both funded by the same upstream address — and that address isn't a CEX hot wallet (Coinbase, Binance, etc.) — they're almost certainly the same person. The CEX exclusion is critical: millions of wallets get first funded by Binance 15, and that isn't wash trading.
+
+**Filter 5 — Flash Loan Self-Trade**
+
+```sql
+-- NFT trade in the same tx as an Aave/dYdX flash loan from the same sender
+SELECT t.*, fl.flash_loan_amount
+FROM nft.trades t
+INNER JOIN ethereum.traces tr ON tr.tx_hash = t.tx_hash
+INNER JOIN flash_loans fl ON fl.tx_hash = t.tx_hash
+WHERE fl.borrower = t.buyer
+```
+
+The tell: a flash loan `borrow` and an NFT `purchase` inside the same `tx_hash`. Because flash loans must repay in one transaction, the `borrower` and the `buyer` being identical is near-definitive proof of a self-trade with borrowed capital.
+
+When @hildobby's dashboard reports $35.6B in wash trading, it means $35.6B of trades triggered at least one of those five flags. Fork the Spellbook query on Dune, swap the date filter, and you can reproduce every number in this article.
+
+---
+
+## Step 4: Walk Through a Real Wallet on Etherscan
+
+Let me show you how to read a wallet on Etherscan — what to look at and what the data tells you. Open [Etherscan](https://etherscan.io) and check address `0xCB17490509413aE052d587eea1140e9BA156dFDE`. Here's my walkthrough:
+
+<video controls playsInline preload="metadata" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}}>
+  <source src="/videos/onchain/nft-laundering/etherscan-walkthrough.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+![Etherscan address page showing wallet overview — ETH balance, funding source (Binance 15), transaction count, and multichain portfolio](/images/onchain/nft-laundering/etherscan-wallet-overview.jpg)
+
+Here's how to read the key fields on any wallet:
+
+**Funding source.** This wallet was funded by **Binance 15** — a centralised exchange hot wallet. That tells you the wallet owner used Binance as their on-ramp. In your own analysis, compare funding sources across wallets in a trade chain. If the buyer and seller both trace back to the same funding source — or worse, to Tornado Cash or freshly created intermediaries — that's a red flag worth investigating.
+
+**Transaction count.** This wallet shows 280 transactions over 4+ years — a reasonable distribution. What you're looking for when assessing risk: wallets with high NFT activity but almost no other transaction types. Single-purpose wallets created just to buy and sell NFTs are a common wash trading pattern.
+
+**NFT Transfers tab.** Click it. This is where the real story unfolds:
+
+![Etherscan NFT Transfers tab showing Lil Pudgy #1315 sale and other NFT token transfers — the on-chain trail](/images/onchain/nft-laundering/etherscan-nft-transfers.jpg)
+
+You can see specific NFT movements — **Lil Pudgy #1315** sold, other ERC-721 transfers. For every transfer on any wallet, you can trace:
+- Where the NFT came from (the seller's wallet)
+- Where the funds came from (the buyer's wallet funding source)
+- Whether multiple wallets in the trade chain share the same origin
+
+This is the core of on-chain NFT analysis: follow the wallets, trace the funding, map the connections. When the buyer's wallet and the seller's wallet trace back to the same upstream source — that's not a market. That's a performance.
+
+### Doing this at scale: the API layer
+
+Etherscan's UI is for spot checks. When you need to monitor thousands of wallets, you hit the same data through the Etherscan API (or Alchemy/QuickNode/Moralis for higher rate limits):
+
+```bash
+# Pull every ERC-721 transfer for a wallet
+curl "https://api.etherscan.io/api\
+?module=account\
+&action=tokennfttx\
+&address=0xCB17490509413aE052d587eea1140e9BA156dFDE\
+&startblock=0&endblock=99999999\
+&sort=asc&apikey=YOUR_KEY"
+```
+
+The response gives you `from`, `to`, `tokenID`, `contractAddress`, `blockNumber`, and `timeStamp` for every NFT transfer. Feed that into any pipeline and you can:
+
+- Compute each wallet's **first funder** (`eth_getTransactionByHash` on the first incoming tx),
+- Build a **transfer graph** (edges = transfers, nodes = wallets) and run community detection for clusters,
+- Cross-reference against OFAC/Tornado Cash address lists (publicly maintained by Chainalysis and `0xaa` on GitHub),
+- Score each trade against the five filters above in near real-time.
+
+For production compliance monitoring, this is the stack:
+
+- **RPC node** (Alchemy/Infura/self-hosted) for raw trace data
+- **Indexer** (The Graph, Covalent, or custom Postgres) for queryable history
+- **Label database** (Etherscan tags, Arkham, Nansen) to resolve addresses to entities
+- **Graph database** (Neo4j, TigerGraph) for cluster analysis
+- **Sanctions screening** (Chainalysis KYT, TRM Labs, Elliptic Navigator) for OFAC/FATF list hits
+
+Chainalysis and TRM essentially productised this stack. Their wash trading heuristics publicly document: same-funder clustering, flash loan detection, rapid-flip scoring, and marketplace incentive arbitrage (like the LooksRare $WETH/$LOOKS token farming that pushed 87% wash volume at launch).
+
+---
+
+## Step 5: The Legal Landscape — Who's Actually Regulating This?
+
+The tools to detect NFT money laundering exist. The legal obligation to use them? That depends entirely on where you are.
+
+### EU — MiCA and AMLD
+
+MiCA (Markets in Crypto-Assets Regulation), fully applicable since December 2024, is the EU's flagship crypto framework. The common assumption is that NFTs are exempt — but that's only half true.
+
+MiCA does carve out an exemption for crypto-assets that are "unique and not fungible" (UNFCA). **But MiCA applies substance-over-form:** a unique tokenId alone is not enough to qualify as a UNFCA. Most PFP collections, membership passes, gaming items, and fractionalised art actually fall *within* MiCA's scope once you assess the metadata and rights layers. Only a small minority — fully on-chain, genuinely distinct characteristics, no homogeneous utility — qualify as true UNFCAs (think CryptoPunks).
+
+Where MiCA *definitely* bites: any **CASP** (Crypto Asset Service Provider) that touches NFT-related transactions — exchanges converting NFT sale proceeds to fiat, custodians holding NFT assets, payment providers processing marketplace payouts. These entities have full AML/CFT obligations: customer due diligence, transaction monitoring, suspicious transaction reporting, and Travel Rule compliance under the EU Transfer of Funds Regulation.
+
+The upcoming **AMLD6** and the new **EU AML Authority (AMLA)**, launching in Frankfurt, will further tighten the net with direct supervisory powers over high-risk obligated entities.
+
+### FATF — The Global Standard-Setter
+
+FATF's Updated Guidance on Virtual Assets (October 2021) was explicit: **NFTs are generally not virtual assets** under FATF's definitions — but countries should consider applying VA standards to NFTs on a case-by-case basis, particularly where they're used for payment or investment.
+
+In practice, FATF flagged NFT marketplaces as a potential gap in the AML framework. Their 2023 and 2024 targeted reviews noted that many jurisdictions haven't extended AML obligations to NFT platforms at all — leaving a regulatory vacuum that launderers exploit.
+
+The key FATF principle: **substance over form.** If something functions as a value transfer mechanism, it should be regulated as one — regardless of whether it's called an "NFT" or a "digital collectible."
+
+### United States — DOJ, FinCEN, and the SEC
+
+The US approach is enforcement-led rather than framework-led. There's no comprehensive NFT regulation, but multiple agencies have made clear they're watching:
+
+- **DOJ** has prosecuted NFT fraud cases: the Frosties rug pull ($1.1M, wire fraud + money laundering conspiracy), the Nathaniel Chastain insider trading case (first NFT insider trading prosecution, 2022), and multiple cases involving NFT-related sanctions evasion.
+- **FinCEN** has not issued binding guidance specifically classifying NFT marketplaces as money services businesses (MSBs). In practice, most major NFT platforms (OpenSea, Blur, Magic Eden) are **not** registered as MSBs and don't operate under BSA obligations. FinCEN's 2019 CVC guidance leaves the door open for enforcement where a platform facilitates convertible virtual currency exchange — but to date, that door hasn't been walked through for NFT marketplaces. Treasury's 2022 study flagged the risk; no formal rulemaking has followed.
+- **SEC** has signalled that some NFTs may qualify as securities, particularly fractionalised NFTs or those sold with an expectation of profit. The Howey test doesn't care what you call the asset.
+- **OFAC** sanctions apply regardless: the Lazarus Group's NFT-related laundering through Tornado Cash resulted in sanctions that affected the entire ecosystem.
+
+### Malta — MFSA and the VFA Framework
+
+Malta's Virtual Financial Assets Act (VFA Act, 2018) was ahead of its time. The **MFSA** (Malta Financial Services Authority) regulates VFA service providers with AML/CFT obligations aligned to FATF standards.
+
+Under the Maltese framework, NFTs fall into a grey area — they're not explicitly classified as VFAs unless they carry rights similar to financial instruments. However, any Maltese-licensed entity facilitating NFT trades or custody is subject to full AML obligations under the Prevention of Money Laundering Act (PMLA).
+
+Malta's **FIAU** (Financial Intelligence Analysis Unit) has issued guidance on virtual asset risks, and compliance teams at Maltese CASPs are expected to monitor for NFT-related typologies — including wash trading, rapid value inflation, and layering through NFT marketplaces.
+
+### The Bottom Line
+
+The regulatory picture is fragmented, but the direction is clear: obligations are expanding, enforcement is accelerating, and the "NFTs aren't regulated" argument has a rapidly shrinking shelf life. If you're at a CASP that processes any NFT-adjacent transactions — even fiat off-ramps from marketplace payouts — your AML obligations are already in play.
+
+---
+
+## Step 6: Know the Red Flags
+
+If you're monitoring NFT-related activity at a CASP, exchange, or payment provider, here's what should trigger enhanced due diligence:
+
+**Transaction red flags:**
+- Customer deposits large amounts of crypto, immediately purchases high-value NFTs
+- NFT sales generate proceeds significantly above original purchase price within a short timeframe
+- Funds from NFT sales are immediately withdrawn to fiat or moved to a different platform
+- Multiple NFTs purchased and sold in rapid succession with no collecting interest
+- Customer uses multiple wallets to interact with the same collection
+
+**Customer red flags:**
+- No apparent interest in the art itself — no social presence, no collector community
+- Unable to explain rationale for high-value purchases
+- Newly created account with minimal verification history
+- Transactions routed through jurisdictions with weak AML frameworks
+
+**On-chain red flags:**
+- NFT collections with low holder counts but high reported volume
+- Top holders are wallet clusters (check with [Bubblemaps](https://bubblemaps.io))
+- Sudden volume spikes on previously dormant collections
+- Creator wallets that fund buyer wallets
+
+---
+
+## Step 7: Understand Why It's Not Being Caught
+
+Most NFT marketplaces — OpenSea, Blur, Magic Eden — aren't registered as financial institutions anywhere. They're not obligated entities under MiCA, they're not registered MSBs under US BSA rules, and they don't perform KYC or file suspicious activity reports. They position themselves as technology platforms, not financial intermediaries.
+
+Under MiCA, CASPs have transaction monitoring obligations — but NFT marketplaces sit **outside** the MiCA perimeter because NFTs themselves are excluded from the definition of crypto-assets (unless fractionalised or functioning as financial instruments). The regulatory gap is real, it's acknowledged, and it's exploitable.
+
+### Real Cases Already Prosecuted
+
+This isn't hypothetical:
+
+- **CryptoPunk #9998** — "sold" for $532M using a flash loan self-trade. Same person, same transaction block.
+- **LooksRare** — 87% of platform volume was wash trading when they launched trading rewards.
+- **DOJ v. Nathaniel Chastain (2022)** — first NFT insider trading prosecution. Anonymous wallets, front-running OpenSea homepage features.
+- **Frosties rug pull** — $1.1M stolen, both creators charged with wire fraud and money laundering conspiracy.
+- **Lazarus Group** — North Korea's hackers ran 500+ phishing domains targeting NFT holders, laundered through Tornado Cash.
+
+Chainalysis identified 262 wallets wash-trading NFTs. One wallet made 830 self-trades. Elliptic documented $100M+ in NFT theft in a single year.
+
+---
+
+## Flor's Take
+
+Here's what frustrates me: the NFT money laundering risk has been documented since 2021. Treasury flagged it. FATF flagged it. Chainalysis publishes the data annually.
+
+And the regulatory response? Carve NFTs *out* of most crypto regulation. Treat them as collectibles. Hope it resolves itself.
+
+It won't. The detection tools exist — you just saw them. Dune Analytics is free. Etherscan is free. Bubblemaps is free. The on-chain data is public. What's missing isn't capability — it's obligation.
+
+If you're working at a CASP that touches NFT transactions — even indirectly — build these patterns into your monitoring. Don't wait for the regulation to catch up to what you already know.
+
+---
+
+## Your Toolkit — Follow Along
+
+Everything I walked through in this article is free and public:
+
+<div style={{overflowX: 'auto', marginBottom: '1.5rem'}}>
+<table style={{width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem'}}>
+  <thead>
+    <tr style={{borderBottom: '2px solid #ec4899'}}>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Tool</th>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>What It Does</th>
+      <th style={{padding: '0.75rem', textAlign: 'left'}}>Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Dune Analytics</td><td style={{padding: '0.75rem'}}>Query on-chain data, wash trading dashboards</td><td style={{padding: '0.75rem'}}><a href="https://dune.com/hildobby/nft-wash-trading">dune.com/hildobby</a></td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Etherscan</td><td style={{padding: '0.75rem'}}>Explore wallets, transactions, NFT transfers</td><td style={{padding: '0.75rem'}}><a href="https://etherscan.io">etherscan.io</a></td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Bubblemaps</td><td style={{padding: '0.75rem'}}>Visualise wallet clusters and holder distribution</td><td style={{padding: '0.75rem'}}><a href="https://bubblemaps.io">bubblemaps.io</a></td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Chainalysis Blog</td><td style={{padding: '0.75rem'}}>Annual crypto crime reports with NFT data</td><td style={{padding: '0.75rem'}}><a href="https://blog.chainalysis.com">blog.chainalysis.com</a></td></tr>
+    <tr style={{borderBottom: '1px solid #333'}}><td style={{padding: '0.75rem'}}>Elliptic</td><td style={{padding: '0.75rem'}}>NFT financial crime reports</td><td style={{padding: '0.75rem'}}><a href="https://elliptic.co">elliptic.co</a></td></tr>
+    <tr><td style={{padding: '0.75rem'}}>FATF Guidance</td><td style={{padding: '0.75rem'}}>Virtual asset regulatory framework</td><td style={{padding: '0.75rem'}}><a href="https://fatf-gafi.org">fatf-gafi.org</a></td></tr>
+  </tbody>
+</table>
+</div>
+
+---
+
+*This article is educational content and does not constitute legal or financial advice. Always consult qualified legal professionals for compliance decisions specific to your organisation. On-chain patterns described are illustrative — actual investigation should be conducted by trained analysts using appropriate tools.*

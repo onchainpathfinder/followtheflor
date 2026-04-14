@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-label="The 4 NFT wash trading typologies — Buyer equals Seller, Back and Forth, Same Funder, Flash Loan Self-Trade">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#9d174d"/></linearGradient>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#581c87"/></linearGradient>
+    <linearGradient id="g3" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#155e75"/></linearGradient>
+    <linearGradient id="g4" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#92400e"/></linearGradient>
+  </defs>
+
+  <rect width="960" height="620" fill="#000"/>
+
+  <text x="480" y="50" font-family="Georgia, serif" font-size="28" fill="#fff" text-anchor="middle" font-weight="700">The 4 NFT Wash Trading Typologies</text>
+  <text x="480" y="78" font-family="system-ui, sans-serif" font-size="13" fill="#9ca3af" text-anchor="middle">The patterns @hildobby's Dune filters detect — and what each one looks like on-chain</text>
+
+  <!-- 01 Buyer = Seller -->
+  <rect x="40" y="120" width="430" height="200" rx="14" fill="url(#g1)" opacity="0.96"/>
+  <text x="65" y="155" font-family="system-ui, sans-serif" font-size="11" fill="#fbcfe8" letter-spacing="3" font-weight="700">TYPOLOGY 01</text>
+  <text x="65" y="195" font-family="Georgia, serif" font-size="28" fill="#fff" font-weight="700">Buyer = Seller</text>
+  <line x1="65" y1="210" x2="445" y2="210" stroke="#fff" stroke-opacity="0.3"/>
+  <text x="65" y="240" font-family="system-ui, sans-serif" font-size="13" fill="#fff" font-weight="600">The same wallet buys and sells the same NFT.</text>
+  <text x="65" y="270" font-family="system-ui, sans-serif" font-size="12.5" fill="#fce7f3">Most obvious wash trade. Requires ignoring</text>
+  <text x="65" y="288" font-family="system-ui, sans-serif" font-size="12.5" fill="#fce7f3">marketplace anti-self-trade rules — but</text>
+  <text x="65" y="306" font-family="system-ui, sans-serif" font-size="12.5" fill="#fce7f3">plenty of platforms don't have them.</text>
+
+  <!-- 02 Back & Forth -->
+  <rect x="490" y="120" width="430" height="200" rx="14" fill="url(#g2)" opacity="0.96"/>
+  <text x="515" y="155" font-family="system-ui, sans-serif" font-size="11" fill="#e9d5ff" letter-spacing="3" font-weight="700">TYPOLOGY 02</text>
+  <text x="515" y="195" font-family="Georgia, serif" font-size="28" fill="#fff" font-weight="700">Back &amp; Forth</text>
+  <line x1="515" y1="210" x2="895" y2="210" stroke="#fff" stroke-opacity="0.3"/>
+  <text x="515" y="240" font-family="system-ui, sans-serif" font-size="13" fill="#fff" font-weight="600">Two wallets ping-pong the NFT between them.</text>
+  <text x="515" y="270" font-family="system-ui, sans-serif" font-size="12.5" fill="#f3e8ff">Wallet A → Wallet B → Wallet A → Wallet B.</text>
+  <text x="515" y="288" font-family="system-ui, sans-serif" font-size="12.5" fill="#f3e8ff">Price climbs each hop. Both wallets are</text>
+  <text x="515" y="306" font-family="system-ui, sans-serif" font-size="12.5" fill="#f3e8ff">controlled by the same entity.</text>
+
+  <!-- 03 Same Funder -->
+  <rect x="40" y="340" width="430" height="200" rx="14" fill="url(#g3)" opacity="0.96"/>
+  <text x="65" y="375" font-family="system-ui, sans-serif" font-size="11" fill="#cffafe" letter-spacing="3" font-weight="700">TYPOLOGY 03</text>
+  <text x="65" y="415" font-family="Georgia, serif" font-size="28" fill="#fff" font-weight="700">Same-Funder Wallets</text>
+  <line x1="65" y1="430" x2="445" y2="430" stroke="#fff" stroke-opacity="0.3"/>
+  <text x="65" y="460" font-family="system-ui, sans-serif" font-size="13" fill="#fff" font-weight="600">Buyer and seller were funded by the same wallet.</text>
+  <text x="65" y="490" font-family="system-ui, sans-serif" font-size="12.5" fill="#ecfeff">Looks like two strangers trading. Trace the</text>
+  <text x="65" y="508" font-family="system-ui, sans-serif" font-size="12.5" fill="#ecfeff">funding source one step back and they share</text>
+  <text x="65" y="526" font-family="system-ui, sans-serif" font-size="12.5" fill="#ecfeff">a common origin. One person, two wallets.</text>
+
+  <!-- 04 Flash loan self-trade -->
+  <rect x="490" y="340" width="430" height="200" rx="14" fill="url(#g4)" opacity="0.96"/>
+  <text x="515" y="375" font-family="system-ui, sans-serif" font-size="11" fill="#fde68a" letter-spacing="3" font-weight="700">TYPOLOGY 04</text>
+  <text x="515" y="415" font-family="Georgia, serif" font-size="28" fill="#fff" font-weight="700">Flash Loan Self-Trade</text>
+  <line x1="515" y1="430" x2="895" y2="430" stroke="#fff" stroke-opacity="0.3"/>
+  <text x="515" y="460" font-family="system-ui, sans-serif" font-size="13" fill="#fff" font-weight="600">Borrow ETH → buy own NFT → repay — in one block.</text>
+  <text x="515" y="490" font-family="system-ui, sans-serif" font-size="12.5" fill="#fef3c7">No capital at risk. Creates a massive "sale"</text>
+  <text x="515" y="508" font-family="system-ui, sans-serif" font-size="12.5" fill="#fef3c7">on the blockchain. CryptoPunk #9998's</text>
+  <text x="515" y="526" font-family="system-ui, sans-serif" font-size="12.5" fill="#fef3c7">$532M "sale" was exactly this.</text>
+
+  <text x="480" y="585" font-family="system-ui, sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle" font-style="italic">A trade triggering any one of these filters is flagged as wash trading in @hildobby's dashboard.</text>
+</svg>
