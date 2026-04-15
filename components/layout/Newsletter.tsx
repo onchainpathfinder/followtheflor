@@ -37,12 +37,17 @@ export default function Newsletter({
             <label className="nl-tag"><input type="checkbox" defaultChecked /> Malta hidden gems</label>
           </div>
         </div>
-        <div className="nl-form">
-          <input type="text" className="nl-input" placeholder="First name" />
-          <input type="email" className="nl-input" placeholder="Your best email" />
-          <button className="nl-btn">I&apos;m in →</button>
+        <form
+          className="nl-form"
+          action="https://florianas-newsletter-2d5a70.beehiiv.com/subscribe"
+          method="GET"
+          target="_blank"
+        >
+          <input type="text" name="first_name" className="nl-input" placeholder="First name" />
+          <input type="email" name="email" className="nl-input" placeholder="Your best email" required />
+          <button type="submit" className="nl-btn">I&apos;m in →</button>
           <span className="nl-fine">Free forever. No spam. Unsubscribe anytime. Dai.</span>
-        </div>
+        </form>
         <div className="nl-proof">
           {proofItems.map((item, i) => (
             <span key={i} className="nl-proof-item">✦ {item}</span>

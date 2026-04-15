@@ -15,7 +15,7 @@ export default function Nav() {
         <li><a href="/explores" className={pathname.startsWith('/explores') ? 'active' : ''}>Explores</a></li>
         <li><a href={isHome ? '#about' : '/#about'}>About</a></li>
       </ul>
-      <a href={isHome ? '#newsletter' : '/#newsletter'} className="nav-btn">Subscribe</a>
+      <a href="/newsletter" className={`nav-btn ${pathname === '/newsletter' ? 'active' : ''}`}>Subscribe</a>
     </nav>
   )
 }
