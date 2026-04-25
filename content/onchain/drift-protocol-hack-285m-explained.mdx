@@ -1,0 +1,203 @@
+---
+title: "The $285M Drift Protocol Hack Wasn't a Hack. It Was a Con."
+description: "On April 1, 2026, $285M disappeared from Drift Protocol in 12 minutes. But the real heist started 6 months earlier. Here's what actually happened — and why Drift's own security failed too."
+date: "2026-04-11"
+pillar: "onchain"
+tags: ["drift protocol hack", "crypto hack 2026", "dprk crypto theft", "solana multisig", "social engineering", "financial crime"]
+primaryKeyword: "drift protocol hack"
+secondaryKeywords: ["drift 285m hack", "dprk crypto theft 2026", "solana multisig security", "drift exploit explained", "unc4736 applejeus"]
+readingTime: "9 min read"
+author: "Flor"
+slug: "drift-protocol-hack-285m-explained"
+---
+
+# The $285M Drift Protocol Hack Wasn't a Hack. It Was a Con.
+
+On April 1st, 2026, $285 million dollars disappeared from Drift Protocol in twelve minutes. The crypto press called it a hack. It wasn't. A hack takes minutes. **This one took six months.**
+
+Six months of conferences. Six months of face-to-face dinners. Six months of Telegram chats. And over one million dollars of real money deposited on the protocol as bait — deliberately, patiently, to make the trap look like a business relationship.
+
+I've spent over a decade in financial crime. I read Drift's post-mortem the day it dropped, and then I read everything the security community on X was saying about what went wrong *inside* Drift. What I found is a story with two attackers — one of them North Korean intelligence, the other Drift itself. Both of them killed $285 million.
+
+Here is what actually happened.
+
+---
+
+## What Went Down on April 1, 2026
+
+April Fool's Day, 2026. Which, as it turns out, was not an accident.
+
+In twelve minutes, attackers gained administrative control of Drift's Security Council multisig, modified the program configuration, minted fake CVT tokens, and executed a transaction that handed them the keys to the protocol. Drift's total value locked dropped from **$550 million to $230 million**. Over half the protocol — gone, in the time it takes to drink an espresso.
+
+Drift's own write-up, published on April 2, describes it as *"a highly sophisticated operation."* They're being generous with their own team, and honest about the attackers. Because the sophistication wasn't in the exploit code. It was in what had happened in the six months before the code even mattered.
+
+The exploit was the last move. The whole game had been played before April 1st.
+
+---
+
+## The Six-Month Con
+
+In the fall of 2025, a group of people approached Drift contributors at a major crypto conference. They presented as a quantitative trading firm looking to integrate with Drift — standard pitch, standard posture, standard conversation. They were technically fluent. Their LinkedIn profiles checked out. Their employment histories were verifiable. Their professional networks were real.
+
+All of that *was* real. That was the point.
+
+A Telegram group was created at the first meeting. Over the following six months, members of this group sought out Drift contributors at multiple industry conferences — in multiple countries. Not once. **Repeatedly.** By the time the exploit happened, the relationship was nearly half a year old and had survived face-to-face dinners, conference drinks, and substantive conversations about trading strategy.
+
+Between December 2025 and January 2026, they went further. They onboarded an Ecosystem Vault on Drift. They filled out the required strategy forms. They deposited **over $1 million of real capital** into the protocol.
+
+Read that again. They put up a million dollars of real money just to look real.
+
+February and March 2026: more meetings, more conferences, more face time. And the whole time, they were sharing links — to "projects they were working on," to "tools they were building," to "wallet apps they wanted feedback on." Standard practice in crypto-trading-firm relationships. Nothing out of the ordinary.
+
+This is not what a hacker operation looks like. This is what an intelligence operation looks like: flights, hotels, constructed identities with real histories, real capital deployed as cover, six months of patience.
+
+---
+
+## The VSCode Vulnerability That Finished the Job
+
+Eventually the trap had to spring. According to Drift's post-mortem, the forensic investigation — being run by **Mandiant**, the same firm that handles nation-state intrusions for governments — points to two confirmed attack vectors:
+
+1. **A contributor cloned a code repository** the "trading firm" shared under the guise of deploying a frontend for their vault.
+2. **Another contributor downloaded a TestFlight application** the group pitched as their wallet product.
+
+Here is the detail that should make every developer reading this article stop what they are doing and check their own setup.
+
+There is a known vulnerability in **VSCode and Cursor** — the two most popular code editors in the world — that the security community was actively flagging from December 2025 through February 2026. The vulnerability is this: **simply opening a file, a folder, or a repository in the editor was enough to silently execute arbitrary code**. No click. No permission dialog. No warning of any kind.
+
+Just — opened a file, and the machine was compromised.
+
+That's how the device that touched the multisig got compromised. That's the moment the six-month con became a twelve-minute heist. It was the final move in a chess game that began at a conference six months earlier.
+
+---
+
+## The Other Half of the Story: Drift's Own Security Failures
+
+Here is where I am going to do something most crypto coverage has not done. I am going to tell you the other half of the story — because while the community was rightly horrified by the DPRK social engineering operation, something else was being reported on X that I think matters more for everybody watching the industry.
+
+Because *this* part could have been prevented by boring, unsexy security hygiene.
+
+**Drift's multisig was configured as a 2-of-5.** Only two signers needed to approve any transaction for it to execute. Industry standard on Solana for protocols with hundreds of millions in TVL is 3-of-5, 4-of-7, or higher. Drift was the lowest threshold on any major Solana protocol.
+
+**Drift's timelock was zero seconds.** No delay. No community notification window. No circuit breaker. The moment the two signatures landed, the transaction executed.
+
+And one week before the attack — *one week* — Drift migrated to a new multisig. [Omer Goldberg from Chaos Labs caught the critical detail](https://x.com/omeragoldberg): when the old multisig signer created the new one, they did not add themselves to it. Which meant the old multisig still held authority to hand over admin control — and that is exactly what the attacker exploited to initiate the fatal proposal.
+
+So let me spell out what Drift had going into April 1, 2026:
+
+1. A **2-of-5 multisig threshold** — the lowest on any major Solana protocol
+2. **Zero timelock** — no delay, no safety window
+3. A **week-old, rushed multisig migration** with a signer management error
+4. **No circuit breaker** on admin operations
+
+Four boring, preventable problems. Any one of them could have stopped the attack.
+
+**North Korea spent six months becoming their friends. Drift spent one week migrating their multisig without checking the math. Both of those things killed $285 million.**
+
+---
+
+## How Drift Compares to the Rest of Solana DeFi
+
+This is not an abstract critique. Here is how Drift's configuration stacks up against other major Solana protocols as of April 5, 2026:
+
+| Protocol | Multisig | Timelock | TVL | Status |
+|---|---|---|---|---|
+| Jupiter Lend | 4/7 | 12h | $1.8B | Secured |
+| Kamino | 5/10 | 12h | $3.0B | Secured |
+| Solstice | 3/5 | 24h | — | Moderate |
+| Loopscale | 3/5 | None | — | Vulnerable |
+| Exponent | 2/3 | None | — | Vulnerable |
+| **Drift** | **2/5** | **None** | **$550M → $230M** | **Exploited** |
+
+Drift was the outlier. Not by a little — by a lot. On the only two metrics that matter for admin key security — threshold and delay — Drift had the weakest configuration of any major Solana protocol. And it is the one that got hit.
+
+Not every secure multisig survives a sophisticated attack. But if your attack surface is already the worst on the chain, you are not going to be the protocol that teaches the rest of us how to survive.
+
+*You can see the full interactive comparison at [followtheflor.com/onchain/drift-comparison](/onchain/drift-comparison).*
+
+---
+
+## Attribution: DPRK, UNC4736, and the Pattern Nobody Wants to See
+
+With **medium-to-high confidence**, the SEAL 911 team has linked this operation to the same threat actor responsible for the Radiant Capital hack in October 2024. That group has several names — **UNC4736** in Mandiant's tracking, also known as **AppleJeus**, also known as **Citrine Sleet**. It is North Korean state-affiliated.
+
+The evidence is both on-chain and operational. On-chain, fund flows used to stage and test the Drift operation trace back to wallets associated with the Radiant attackers. Operationally, the persona patterns — the LinkedIn profiles, the employment histories, the way they approached Drift contributors — match known DPRK-linked activity.
+
+And then there is the detail that chilled me when I read it.
+
+**The people who met Drift contributors in person were not North Korean nationals.** DPRK threat actors at this level deploy third-party intermediaries to do face-to-face relationship-building. They use real people, from other countries, who either knowingly or unknowingly do the in-person work so the operation looks legitimate to everybody who runs background checks.
+
+The handshake was real. The dinner was real. The conference badge was real. The accent was probably wrong for North Korea. None of that matters. The operation was DPRK from the top.
+
+Mandiant has not yet formally attributed the Drift exploit — that requires completed device forensics. But the community expectation is that it will land on DPRK. **This is the third major DPRK-linked crypto heist in eighteen months.**
+
+---
+
+## The Pattern Nobody Wants to Talk About
+
+This is the part that should scare you.
+
+- **2022 — Axie Infinity Ronin Bridge: $625 million.** Started with a fake LinkedIn job offer to an Axie engineer. Social engineering.
+- **2023 — Atomic Wallet, CoinsPaid, Alphapo: $200M+.** DPRK-linked. Social engineering.
+- **2024 — Radiant Capital: $50 million.** Same group as Drift. Malicious file delivery.
+- **2025 — Bybit: $1.5 billion.** DPRK-linked. Not a code break — a process break.
+- **2026 — Drift: $285 million.** Same group. Same playbook. Evolved sophistication.
+
+Notice what is missing from that list. Nobody is breaking cryptography. Nobody is finding zero-days in the Solana or Ethereum protocols. **The chain itself is not the vulnerability.**
+
+Humans are. Process is. Relationships are. Trust is.
+
+**DPRK doesn't break code. It breaks trust.** And every year, the amounts go up, because the crypto industry still thinks of this as a hacking problem when it is an intelligence problem.
+
+---
+
+## What Protocols Should Do
+
+If you run a protocol, sit on a multisig, or touch admin keys, this is for you:
+
+1. **Your multisig threshold should be at least 3-of-5.** 4-of-7 is better. Every signer needs independent verification of any proposal before signing — independent, not Telegram, not a shared call.
+2. **Timelocks are not optional.** A minimum 12-hour delay on every admin action gives the community a window to react. Drift's zero-timelock was the kill-shot.
+3. **The device that touches your multisig touches nothing else.** No new repos. No TestFlight apps. No "try our wallet." That computer exists for one purpose.
+4. **Treat every new counterparty relationship — especially high-value trading firms — as an intelligence operation until proven otherwise.** Six months of coffee does not mean you know someone.
+5. **Audit your migrations.** Never move a multisig without a second-pair review of the signer set. Drift's week-old migration had a clerical error with a nine-figure price tag.
+6. **Turn off the VSCode and Cursor remote file execution features.** Patch the known vulnerabilities. If you do not know what I am talking about, find out before you touch another line of code.
+
+---
+
+## What Retail Users Should Do
+
+If you use crypto but you do not build it, this still matters to you. Because the same groups that ran the Drift operation run parallel operations targeting individuals — fake recruiters on LinkedIn, fake interview processes, fake NFT partnerships, fake wallet apps. All of it starts with a relationship.
+
+Three things:
+
+1. **If anybody online asks you to download anything** — a beta app, a PDF, a script, a repository, anything — assume it is malicious until you can verify otherwise through a channel they did not suggest.
+2. **If a protocol you use does not publish its multisig configuration — ask.** Publicly, if you have to. If they will not answer, move your funds.
+3. **Your hardware wallet is not optional.** And the seed phrase stays off-device, off-cloud, off-photo, off-everything. Write it down on paper and put the paper somewhere stupid and safe.
+
+---
+
+## The Real Lesson
+
+Drift was not destroyed by a clever hacker. It was destroyed by two things happening at once: the most sophisticated state-level social engineering operation crypto has ever publicly documented, and a set of boring, preventable security failures that every honest auditor had been warning about for years.
+
+Both things are true. Both things matter. And if the industry only talks about the first one because it is more exciting, we will lose another $285 million to the same playbook before Christmas.
+
+The VSCode vulnerability was the glamorous part. The missing timelock was the boring part. **The boring part is what killed them.**
+
+---
+
+*This is the first article in the **FLOR ONCHAIN** investigation series. New pieces every week — crypto hacks, financial crime, regulation in plain English, and the patterns nobody wants to see. [Subscribe to the newsletter](/) or [watch the video version on YouTube](#).*
+
+---
+
+### Sources
+
+1. [Drift Protocol official post-mortem](https://x.com/DriftProtocol) — April 2, 2026
+2. [Omer Goldberg (Chaos Labs) security analysis](https://x.com/omeragoldberg)
+3. [SlowMist TI Alert](https://x.com/SlowMist_Team) — April 2, 2026
+4. [Squads Protocol investigation update](https://x.com/multisig) — April 2, 2026
+5. [Mandiant UNC4736 profile](https://www.mandiant.com/resources/blog)
+6. [Radiant Capital October 2024 post-mortem](https://medium.com/@RadiantCapital)
+7. [TRM Labs Drift exploit analysis](https://www.trmlabs.com/resources/blog/drift-protocol-285m-exploit)
+8. [CISA AppleJeus advisory](https://www.cisa.gov/news-events/cybersecurity-advisories)
+9. [The Hacker News — VSCode/Cursor vulnerability coverage](https://thehackernews.com)
+10. [SEAL 911 team](https://www.seal911.org)

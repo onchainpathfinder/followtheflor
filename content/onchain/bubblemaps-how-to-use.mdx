@@ -1,0 +1,119 @@
+---
+title: "Bubblemaps: The Free Onchain Tool That Exposes What Wallets Are Really Doing"
+description: "Learn how to use Bubblemaps to spot token manipulation, wallet clusters, and red flags — a practical guide for crypto compliance professionals and investors."
+date: "2026-03-21"
+pillar: "onchain"
+category: "web3"
+tags: ["bubblemaps", "onchain analysis", "token distribution", "AML", "crypto compliance", "wallet clustering"]
+primaryKeyword: "bubblemaps how to use"
+readingTime: "7 min read"
+audience: "all"
+---
+
+Most people staring at a blockchain explorer see a wall of addresses and transactions. Bubblemaps turns that same data into something you can actually read — instantly. And what it reveals is often uncomfortable.
+
+If you're doing any kind of due diligence on a token, investigating a suspicious project, or trying to understand where a token's supply actually lives, Bubblemaps should be your first stop. Here's exactly how to use it and what to look for.
+
+## What Is Bubblemaps?
+
+Bubblemaps is a free onchain analytics platform that visualises token distribution and wallet relationships as an interactive bubble map. Each bubble is a wallet. The size of the bubble represents how much of the token that wallet holds. Lines between bubbles indicate transactions — money moving between addresses.
+
+The result is a network graph that makes it immediately obvious whether a token's supply is genuinely distributed or concentrated in a handful of interconnected addresses. What would take hours to piece together manually in Etherscan, Bubblemaps surfaces in seconds.
+
+It supports 12+ chains including Ethereum, BNB Chain, Solana, Polygon, Avalanche, Base, Arbitrum, and Aptos. As of 2025, the platform also launched Bubblemaps V2, which added real-time token distribution tracking, time-travel history, and improved wallet cluster detection.
+
+## How to Use Bubblemaps: Step by Step
+
+### Step 1: Find the Token
+
+Go to [bubblemaps.io](https://bubblemaps.io) and search by token name or, preferably, by contract address. Using the contract address matters — token names can be spoofed, contract addresses can't.
+
+Once loaded, you'll see the bubble map for the token you searched. The largest bubbles are the top holders. Connections between them show transaction history.
+
+### Step 2: Read the Distribution
+
+This is where it gets interesting. Start by asking yourself: how concentrated is this?
+
+**Healthy distribution** looks like dozens of bubbles of varying sizes with few direct connections between them. The top holders don't transact with each other. The supply is spread out.
+
+**Concentrated distribution** — red flag — looks like a small cluster of large, tightly connected bubbles. If the top 10 wallets hold 40-60% of supply and they've all been transacting with each other, that's a problem.
+
+Bubblemaps will colour-code clusters it identifies as related. Same colour = potentially the same entity controlling multiple wallets. This is where wallets that look separate on the surface get exposed as connected.
+
+### Step 3: Use Magic Nodes
+
+Magic Nodes is Bubblemaps' most powerful feature. It expands the map to reveal hidden wallet connections that don't show up in the standard view — intermediate wallets, hop addresses, and layered transfer chains that link the visible clusters to additional wallets.
+
+Think of it like a simplified version of what compliance analysts do manually when tracing a transaction chain. Enable it in the top menu. The map will expand to show second and third-degree connections. If those connections lead back to the same cluster of large holders, that confirms centralised control.
+
+### Step 4: Use Time Travel
+
+The Time Travel feature lets you scroll back through historical token distributions. This is particularly useful for understanding a token's lifecycle:
+
+- Was supply originally concentrated and only later dispersed?
+- Did a large wallet dump right before a price crash?
+- When did certain wallets first acquire tokens — before or after public launch?
+
+Wallets that receive tokens before a public launch and then distribute them gradually are a classic insider/team wallet pattern. Time Travel makes this visible.
+
+### Step 5: Cross-Reference with a Block Explorer
+
+Bubblemaps is a visualisation layer — it shows you *what* the relationships look like. To understand *why*, you need to go deeper. Take any suspicious wallet from the bubble map and paste it into Etherscan (for ETH), Solscan (for Solana), or BscScan (for BNB Chain).
+
+From there you can see the full transaction history, contract interactions, and whether that wallet is also connected to known mixers, exchanges, or flagged addresses.
+
+## What Red Flags Actually Look Like
+
+Here's what I look for specifically when using Bubblemaps for due diligence or investigation work:
+
+**Wash Trading Pattern**: A small cluster of wallets constantly transacting with each other, inflating volume without genuine buyers. On the bubble map, this looks like a tight cluster with many lines looping between the same addresses. Legitimate trading doesn't loop.
+
+**Pump and Dump Setup**: Marketing wallets receiving large allocations, then transferring to exchange deposit addresses in a coordinated wave. On the map, watch for multiple same-coloured bubbles suddenly connecting to centralised exchange wallet clusters.
+
+**Rug Pull Indicators**: Rapid consolidation of supply into one or two wallets, followed by swaps or outward transfers. Time Travel will show the supply suddenly concentrating before the price collapses.
+
+**Team Wallet Masking**: Projects that claim wide distribution but have 20 identically-sized wallets that all transact with the same original funding address. Without Bubblemaps, this is extremely tedious to detect manually. With it, the same-coloured cluster makes it obvious in under a minute.
+
+**Insider Pre-Mine**: Wallets that received tokens before the listed launch date and have since sold into liquidity. Time Travel will show these wallets present at the genesis of the token before any public sale.
+
+## The Compliance Application
+
+From an AML perspective, Bubblemaps is not a replacement for professional blockchain analytics tools like Chainalysis Reactor or TRM Labs. It doesn't do risk scoring, it doesn't flag sanctioned addresses, and it doesn't connect onchain data to real-world identity.
+
+What it does — and does extremely well — is provide a fast first-pass visual intelligence layer that can help you decide where to focus deeper investigation.
+
+In practice, I use Bubblemaps as a triage tool:
+
+- New token flagged in a transaction → quick Bubblemaps check before opening Reactor
+- Customer claims to be providing liquidity for a legitimate project → Bubblemaps distribution check to sense-test the project's credibility
+- Token appears in a suspicious transaction pattern → Bubblemaps time travel to understand where the supply came from
+
+It's also genuinely useful for crypto founders. If you're launching a token and want to demonstrate credible distribution to investors and regulators, a clean Bubblemaps screenshot is increasingly part of the transparency narrative. Conversely, if your token looks suspicious on Bubblemaps, don't be surprised when your crypto-native users call it out publicly — they're checking.
+
+## Bubblemaps V2 and What Changed
+
+The V2 update (2025) brought a meaningful upgrade: real-time tracking of token distribution as it changes, rather than static snapshots. This matters for monitoring live situations — an ongoing rug pull, a coordinated dump, or a whale accumulation event. The Intel Desk feature also opened up community-driven investigation threads, essentially turning Bubblemaps into a collaborative research environment for onchain investigators.
+
+The API and iframe integrations mean compliance tools and analytical platforms can embed Bubblemaps visualisations directly into their dashboards — something that will become increasingly relevant as onchain analytics gets embedded into broader compliance workflows.
+
+## Flor's Take
+
+Bubblemaps democratised a capability that used to require either expensive tooling or a lot of manual Etherscan work. The fact that it's free and accessible to anyone — not just compliance teams with six-figure tool budgets — has genuinely shifted how the crypto community holds projects accountable.
+
+What I find most valuable is the speed. In a compliance context, triage matters. Not every flagged transaction needs a full blockchain forensics investigation. Bubblemaps gives you a 60-second read on whether something warrants deeper investigation or can be deprioritised. That's operationally significant when you're managing volume.
+
+The limitation worth keeping in mind: Bubblemaps shows you connections, not identities. A suspicious cluster of interconnected wallets tells you something looks wrong — it doesn't tell you who's behind it or whether it constitutes a reportable offence. For that, you still need the full investigation toolkit.
+
+Use it as your starting point, not your conclusion.
+
+## What to Do Next
+
+Go to [bubblemaps.io](https://bubblemaps.io), pick any token you've recently interacted with, and check the distribution. You might be surprised what you find. Then:
+
+1. **For compliance professionals** — add Bubblemaps to your triage workflow as a first-pass visual check before opening heavier tooling.
+2. **For crypto investors** — make it a habit before buying into any new project. Concentrated supply + tightly clustered holders = walk away.
+3. **For crypto founders** — check how your own token looks on Bubblemaps. If it looks bad, understand why — and have an answer ready.
+
+---
+
+*Disclaimer: This article is for informational and educational purposes only. It does not constitute financial, legal, or compliance advice. Always consult qualified professionals and apply your own judgment when conducting due diligence or compliance investigations. Bubblemaps is a third-party tool — always verify data against primary blockchain explorers.*

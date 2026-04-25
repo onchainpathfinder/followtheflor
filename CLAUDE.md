@@ -9,7 +9,6 @@
 - **Site:** followtheflor.com
 - **Brand name:** FLOR
 - **Author:** Flor (Floriana — based in Malta)
-- **Tagline:** "Follow the money. Follow the Flor."
 - **Mission:** Combine crypto/compliance expertise, fitness, and Mediterranean lifestyle into a personal brand that educates, inspires, and earns
 - **Positioning:** One of the few women in crypto compliance who also lives the lifestyle. Real expertise, real life, no corporate BS.
 

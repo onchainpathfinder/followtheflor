@@ -1,0 +1,99 @@
+---
+title: "Every neobank now has crypto. Not every neobank has the AML to back it up."
+description: "Revolut, Bunq, N26, Wise — a 2026 compliance breakdown of Europe's neobank crypto push ahead of the July MiCA deadline."
+date: "2026-04-21"
+pillar: "onchain"
+tags: ["neobanks", "MiCA", "crypto AML", "Revolut", "N26", "Bunq", "Wise", "CASP", "EU regulation"]
+primaryKeyword: "neobanks crypto MiCA compliance"
+readingTime: "7 min read"
+---
+
+Ten weeks until MiCA enforcement goes full EU-wide. Ten weeks until every Crypto-Asset Service Provider — including the ones sitting inside neobank apps — needs to be properly authorised, properly monitored, and properly able to explain where the money went.
+
+And right now, every European neobank has crypto. Revolut. Bunq. N26. Wise. The ones that don't have a button for it have a partnership integration that acts like one. What nobody's saying out loud: the AML frameworks behind most of those buttons were built for fiat, not for onchain.
+
+This is the breakdown I've been asked for three times this month. Here it is.
+
+📸 *SCREENSHOT: Revolut crypto dashboard — full list of assets + staking tab visible*
+
+## The state of play, neobank by neobank
+
+### Revolut
+Revolut is the adult in the room. They hold a MiCA CASP licence via their Lithuanian entity (authorised late 2025), and they went through the full Travel Rule rollout rather than passing the problem to a third party. Their crypto offering now includes staking for a handful of PoS assets — and crucially, staking is treated as a regulated activity with separate disclosures in the app.
+
+**What to watch:** Revolut's crypto customer base is enormous. They inherited all of Europe's casual-investor crypto traffic when local exchanges tightened KYC. That volume is a compliance tail-risk — not because Revolut is doing anything wrong, but because mass-market onramps attract mass-market scam victims. Pig butchering cases in Revolut flows have tripled year over year, per internal reports I've seen from two VASPs.
+
+### Bunq
+Bunq's crypto came through a [Kraken](https://www.kraken.com) partnership. The user clicks "Invest in Crypto" in the Bunq app, but the actual custody, execution, and — here's the important part — the Travel Rule reporting is Kraken's responsibility. Bunq is the distribution channel. Kraken is the CASP.
+
+**What to watch:** in a partnership model, the AML surface is split across two institutions. Regulators have been clear that the customer-facing institution (Bunq) can't wash its hands of monitoring obligations. If the funds going into the Bunq crypto feature came from a flagged jurisdiction, Bunq still needs to catch it — Kraken's monitoring won't see the originating fiat flows.
+
+📸 *SCREENSHOT: Bunq crypto investment screen — the Kraken partnership disclosure should be visible in small print*
+
+### N26
+N26 partnered with [Bitpanda](https://www.bitpanda.com) in 2024 after their earlier crypto launch got paused mid-rollout. Bitpanda is a MiCA-ready CASP based in Austria, which means the compliance risk is more cleanly contained than Bunq's model. But N26's customer base skews younger, more mobile, and less financially literate — which is exactly the profile that gets targeted by fake investment romance scams.
+
+**What to watch:** N26 flagged in their 2025 risk report that crypto-related suspicious activity reports rose 180% year-over-year. Most of those weren't N26 customers committing crime. They were N26 customers being scammed. The compliance challenge isn't catching criminals — it's protecting victims who still have their PIN, still have their 2FA, still genuinely believe they're funding a pig-butchering "investment platform" run out of a scam compound in Southeast Asia.
+
+### Wise
+Wise added crypto transfers through their [Wise Account](https://wise.com) in 2025 — more as a currency-agnostic transfer rail than as an investment product. This is the cleanest model from a MiCA standpoint: Wise isn't selling you crypto as an asset, they're letting you move value that happens to be denominated in crypto. The regulatory classification is narrower. The AML obligations are proportionally lighter.
+
+**What to watch:** Wise's compliance team is one of the strongest in the neobank cohort, full stop. But narrower scope doesn't mean zero risk — Travel Rule obligations still apply to outbound crypto transfers, and if you're sending to a non-compliant VASP, Wise has to make a judgment call.
+
+### Monzo
+Monzo is still saying no. This is, frankly, the adult move if you don't have the compliance capacity to do it right. Monzo's 2025 annual report explicitly frames this as a risk-appetite decision — they'll do crypto when they can do it well, not before.
+
+**What to watch:** absolutely nothing, and that's the point. Zero crypto surface area means zero crypto compliance drag.
+
+📸 *SCREENSHOT: N26 crypto page OR the Bitpanda partnership announcement — whichever is cleaner*
+
+## What MiCA actually changes for neobanks on July 1, 2026
+
+Three things stop being optional.
+
+**1. The CASP licence requirement applies to whoever's doing the crypto, not whoever's hosting the button.**
+If your neobank has a crypto feature powered by an external partner (Bunq/Kraken, N26/Bitpanda), the partner needs the CASP authorisation. If the neobank is doing it in-house (Revolut), the neobank needs it. "We're just the UI" is not a regulatory defence — the [EBA issued clarifying guidance](https://www.eba.europa.eu/) on this in Q4 2025.
+
+**2. Travel Rule compliance must be bi-directional and documented.**
+Every transfer out of the neobank's crypto product into an external wallet needs originator + beneficiary information. Every transfer in needs to be screened against the counterparty's due diligence. Most neobanks are passing this to their CASP partner. Fine — as long as the contractual liability is clear and the neobank has seen the evidence.
+
+**3. The fit-and-proper test for MLROs got stricter.**
+Under MiCA, the person responsible for AML at the CASP level needs demonstrable crypto-specific competence. A traditional-banking MLRO who took a MiCA masterclass is not necessarily enough. Some neobanks are quietly replacing their MLRO right now. You'd be surprised which ones.
+
+## The AML risks that are unique to the neobank crypto model
+
+These are different from the risks at a pure crypto exchange. Worth knowing both as a user and as a compliance pro.
+
+1. **The mass-market onramp problem.** Neobank crypto customers are, on average, less crypto-literate than exchange customers. They're also the group most likely to be scam victims — especially pig butchering and fake DeFi platforms. The compliance role shifts from "catch money launderers" to "stop victims from funding criminals."
+
+2. **Fiat-to-crypto velocity.** When someone's scam controller asks them to buy €5,000 of USDT and send it to a specific wallet, that flow hits the neobank first (as a fiat deposit), then the crypto feature (as a purchase), then the external wallet (as a withdrawal). Each hop is a separate monitoring surface. Few neobanks have connected all three into a single behavioural view.
+
+3. **Dormancy then burst.** A classic red flag. Customer has a neobank account for two years, never touches crypto, then suddenly buys €3,000 of Bitcoin and withdraws it to a personal wallet within the hour. In a traditional bank, this would trigger. In crypto, a lot of neobank monitoring engines treat "crypto purchase" as its own workflow and don't correlate with account dormancy.
+
+4. **Partnership liability gaps.** When the neobank outsources custody and execution, there's always a thin seam between "the neobank's monitoring" and "the CASP's monitoring." Criminals look for those seams. So do regulators.
+
+## What to do if you're a compliance pro at one of these
+
+- Pull last quarter's crypto-related SARs. Count how many came from customers with less than 12 months of account history. If it's more than 40%, your monitoring is too slow.
+- Check whether your Travel Rule evidence is actually retained — or just passed through to a CASP partner who could lose it in a migration.
+- Make sure your MLRO has crypto-specific training documented for the July 1 audit. If they don't, book the course this week.
+- If you use an external CASP, get a written attestation of their MiCA readiness. Not a marketing page. A signed document.
+
+## What to do if you're a user
+
+- Check whether the crypto feature in your neobank app is operated directly or through a partner. The FAQ usually says. If it's vague, that's a signal.
+- Before you send crypto out of a neobank-integrated wallet, check the destination against the [ESMA register](https://www.esma.europa.eu/) of authorised CASPs. If you're sending to a non-authorised VASP, you may see transfer delays or freezes.
+- If a "friend" or "advisor" you met online is walking you through how to buy crypto in your neobank app, close the app and read [the UK Take Five campaign](https://takefive-stopfraud.org.uk). You are being scammed. No exceptions.
+
+📸 *SCREENSHOT: ESMA CASP register screenshot — ideally showing Revolut or Bitpanda listed*
+
+## The honest take
+
+I've written this because three different compliance officers at three different neobanks asked me the same question in the last month: "What does our MiCA gap actually look like from the outside?" This is what it looks like. If the framework above sounds aggressive, it's because July 1 is ten weeks away and there is no grace period past that date.
+
+The neobanks that are ready will be fine. The ones that are mid-migration will be under pressure. The ones that haven't moved — you can name them yourself — are about to have a difficult summer.
+
+**If you're on a neobank crypto team and you're reading this: DM me. The templates I'd use to do a self-assessment are [on Patreon](INTERNAL LINK NEEDED — Patreon URL), but I'll happily trade takes offline.**
+
+[INTERNAL LINK NEEDED: related article — What Is the Travel Rule?]
+[INTERNAL LINK NEEDED: related article — What Is MiCA and Why Should You Care?]

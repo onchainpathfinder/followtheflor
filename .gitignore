@@ -34,6 +34,16 @@ homepage-neon/
 FLOR*
 photo-rename-guide.txt
 
+# private planning + drafts (shoot lists, internal notes)
+panning/
+planning/
+content/onchain/drafts/
+content/runs/launch-video-script-and-social.md
+
+# local Claude runtime config
+.claude/launch.json
+.claude/settings.local.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
