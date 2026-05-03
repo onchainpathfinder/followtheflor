@@ -67,7 +67,7 @@
     <line x1="1000" y1="290" x2="1000" y2="310" stroke="#ff2db7" stroke-width="1" opacity="0.6"/>
     <text x="1000" y="335" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ff2db7">Arbiter ruling</text>
     <text x="1000" y="360" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" fill="#a0aec0">Civil liability + 40% award</text>
-    <text x="1000" y="378" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" fill="#a0aec0">Notified to MFSA & FIAU</text>
+    <text x="1000" y="378" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" fill="#a0aec0">Notified to MFSA &amp; FIAU</text>
   </g>
 
   <!-- ======== EVENT 4: Next 12 months ======== -->
