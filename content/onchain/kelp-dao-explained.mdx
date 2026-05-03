@@ -1,0 +1,140 @@
+---
+title: "What Is Kelp DAO? The Liquid Restaking Protocol Explained (2026)"
+description: "Kelp DAO turns your ETH into rsETH — earning staking, restaking, and points yield in one token. Here's how it works, what the risks are, and why compliance teams should pay attention."
+date: "2026-05-03"
+pillar: "onchain"
+category: "web3"
+tags: ["Kelp DAO", "liquid restaking", "rsETH", "EigenLayer", "DeFi", "Ethereum staking"]
+primaryKeyword: "what is Kelp DAO"
+readingTime: "8 min read"
+audience: "all"
+---
+
+If you've spent any time in DeFi over the past two years, you've watched the same word climb every dashboard, podcast and Twitter timeline: **restaking**.
+
+And sitting near the top of that whole category — quietly accumulating billions in TVL while everyone argued about points — is Kelp DAO.
+
+Kelp DAO is a liquid restaking protocol. You give it ETH (or a liquid staking token like stETH or ETHx), and it gives you back **rsETH** — a single token that earns Ethereum staking yield, EigenLayer restaking rewards, and Kelp Miles, all at the same time.
+
+That's the elevator pitch. The reality is more interesting — and the risks are worth understanding before you go anywhere near it.
+
+<Callout type="insight" title="Why Kelp DAO matters">
+Liquid restaking is the fastest-growing DeFi category since liquid staking itself. Kelp DAO is one of the largest LRT protocols by TVL, sits inside the EigenLayer ecosystem, and has become a core building block for DeFi yield strategies. If you work in crypto — trading, building, or compliance — you'll see rsETH show up in customer wallets sooner or later.
+</Callout>
+
+## First — What Is Liquid Restaking?
+
+To get Kelp DAO, you need three concepts in the right order.
+
+**Staking** — you lock 32 ETH into Ethereum's consensus layer, validate the network, earn ~3% APR. Capital is illiquid until you unstake (which takes days).
+
+**Liquid staking** — protocols like Lido, Rocket Pool and Stader pool everyone's ETH together, run the validators on your behalf, and give you back a tradeable token (stETH, rETH, ETHx). You earn the staking yield AND can use the token in DeFi. This is the entire reason Lido is one of the largest entities in crypto.
+
+**Restaking** — EigenLayer introduced the idea that you can take your already-staked ETH (or LSTs) and "restake" it to secure additional services beyond Ethereum itself: oracles, bridges, data availability layers, rollups. In exchange, those services pay you extra yield.
+
+**Liquid restaking** — same logic as liquid staking, applied to restaking. You deposit ETH or LSTs into a liquid restaking protocol, it restakes them via EigenLayer, and you get back a single tradeable token that represents your position.
+
+That single token is what Kelp DAO calls **rsETH**.
+
+<ComparisonTable
+  headers="Layer | What It Does | Token You Hold | Yield Source"
+  rows="Staking | Secures Ethereum | None (locked ETH) | ETH issuance + tips ;; Liquid staking | Pools staking + makes it liquid | stETH, rETH, ETHx | ETH issuance + tips ;; Restaking | Reuses staked ETH to secure other services | Restaking position (illiquid) | + AVS rewards ;; Liquid restaking | Pools restaking + makes it liquid | rsETH, weETH, ezETH | ETH yield + AVS + points"
+/>
+
+## How Kelp DAO Actually Works
+
+Kelp DAO's product is simple to use and complicated underneath.
+
+You deposit one of the supported assets — ETH, stETH, ETHx, sfrxETH, or others — into Kelp's smart contract. The protocol pools your assets, restakes them through EigenLayer (delegating to operators that secure various AVSs), and mints you rsETH at the prevailing exchange rate.
+
+rsETH is a **rebasing-free** liquid restaking token. Instead of your balance going up, the **value** of each rsETH increases relative to ETH as rewards accrue. So 1 rsETH today might be worth ~1.05 ETH; in a year it might be worth ~1.08 ETH. Same balance, more value.
+
+You can hold rsETH, swap it on a DEX, use it as collateral in lending protocols, LP it on Curve or Balancer, or deposit it into yield strategies on Pendle. It behaves like any other ERC-20 — the restaking infrastructure is invisible to the holder.
+
+<Callout type="tip" title="Why non-rebasing matters">
+Non-rebasing tokens (like rsETH or wstETH) are far more useful in DeFi than rebasing tokens (like raw stETH). DeFi protocols can't always handle balances that change every block, so non-rebasing LRTs are the ones that actually integrate everywhere. This is one of the structural reasons rsETH has so much DeFi adoption.
+</Callout>
+
+## The Yield Stack
+
+This is where liquid restaking earns its hype. A single rsETH position earns from multiple sources stacked on top of each other:
+
+<ComparisonTable
+  headers="Yield Source | Approx. APR | What It Is"
+  rows="ETH staking yield | ~3.0% | The base Ethereum staking reward, passed through from the underlying validators ;; EigenLayer restaking rewards | Variable (early-stage) | Payments from the AVSs that Kelp's operators secure — paid in ETH or AVS tokens ;; Kelp Miles | Points (no fixed value) | Kelp's loyalty points — historically convertible into KEP or future token rewards ;; EigenLayer Points | Points (no fixed value) | EigenLayer's own points programme, claimed automatically through Kelp ;; Integration boosts | Variable | Extra incentives when rsETH is used in protocols like Pendle, Karak, Symbiotic"
+/>
+
+The combined "headline APR" you see on dashboards usually only counts the staking yield. The points stack — Kelp Miles + EigenLayer Points + ecosystem boosts — is where the meaningful upside has historically lived. Whether that continues depends entirely on token launches and how the points convert.
+
+<Accordion title="How to think about points yield without lying to yourself">
+Points are not yield. They're a promise of future value that may or may not materialise. The right way to evaluate a points position is to ask three questions: (1) What is the realistic floor value of these points if the protocol underdelivers? (2) What's the dilution risk between now and the airdrop? (3) What's my exit liquidity if I want out before the conversion? If you can't answer all three, you're not investing — you're farming hope.
+</Accordion>
+
+## The EigenLayer Connection
+
+Kelp DAO doesn't operate in isolation. It's deeply integrated with EigenLayer, which sits beneath the entire liquid restaking category.
+
+EigenLayer is the protocol that makes restaking technically possible. It allows ETH (or LSTs) to be "rehypothecated" to secure Actively Validated Services (AVSs) — things like data availability layers (EigenDA), oracles, bridges, and other crypto-economic infrastructure that needs decentralised security.
+
+When you deposit into Kelp DAO, your assets are restaked via EigenLayer and delegated to operators that run the actual AVS workloads. Kelp curates which operators it uses, manages the delegation strategy, and aggregates the rewards back to rsETH holders.
+
+<Callout type="insight" title="Why this structure matters">
+You're not just exposed to Kelp DAO's smart contracts. You're exposed to EigenLayer's smart contracts, the operators Kelp delegates to, the AVSs those operators secure, and the slashing rules of all of them. That's a longer risk chain than vanilla liquid staking — and it's the single most underestimated thing about restaking.
+</Callout>
+
+## The Risks Nobody Wants to Talk About
+
+Let me be direct: the upside of liquid restaking is well-marketed. The risks are not.
+
+<ComparisonTable
+  headers="Risk | What It Is | Why It Matters"
+  rows="Slashing risk | Validators can be slashed for misbehaviour. With restaking, slashing can also happen at the AVS layer | Your underlying ETH balance can decrease — the LRT token absorbs the loss ;; Smart contract risk | Multiple contract layers (Kelp, EigenLayer, AVSs) | Each layer is a potential exploit surface — the longer the chain, the higher the cumulative risk ;; Operator risk | Kelp delegates to operators who run AVSs | A single malicious or negligent operator can trigger slashing across delegated stake ;; Depeg risk | rsETH trades on secondary markets | If sentiment shifts or large holders exit, rsETH can trade below its underlying ETH value ;; Centralisation risk | LRT protocols are concentrated in a handful of operators | Most restaked ETH ultimately routes through a small set of validators — concentration is a systemic concern ;; Points risk | Yield projections often assume points convert favourably | If the eventual token launch is dilutive or delayed, the realised APY can be a fraction of what you projected"
+/>
+
+<Accordion title="The systemic risk almost nobody talks about">
+Restaking creates correlated risk across what looks like independent systems. The same ETH securing Ethereum is also securing a bridge, an oracle, a data availability layer, and a sidechain. If a slashing event hits one AVS, it propagates through every protocol that delegated to those operators. The 2008 financial crisis was, at its heart, about correlated risk hiding inside instruments that looked safe. Restaking has the same structural feature. That doesn't mean it will end the same way — but pretending it can't is naive.
+</Accordion>
+
+## Kelp DAO for Compliance Professionals
+
+If you're in crypto AML, risk or compliance, here's why you should care.
+
+Liquid restaking tokens have become one of the most common DeFi positions among sophisticated retail and institutional users. rsETH is going to show up in source-of-funds documentation, in deposit flows from DeFi-native customers, and in transaction monitoring alerts. You need to be able to explain it.
+
+<ComparisonTable
+  headers="Compliance Scenario | What rsETH Looks Like | What to Verify"
+  rows="Customer source of funds | Customer holds rsETH instead of ETH | rsETH is restaked ETH — verify the deposit history into Kelp matches the customer's claimed origin of the original ETH ;; Large rsETH withdrawal | Customer redeems rsETH for ETH or sells on a DEX | Check the timing — large LRT outflows can correlate with market stress events ;; Yield income explanations | Customer claims yield from holding rsETH | The yield stack (staking + restaking + points) is real but variable — be sceptical of customers who can't explain how they got there ;; DeFi exposure mapping | Risk assessment for a VASP or platform | Understand which LRTs your users hold — concentration in any single LRT is a counterparty exposure that affects the whole platform"
+/>
+
+## How to Start Using Kelp DAO
+
+<StepList steps="Go to kelpdao.xyz :: Connect a wallet (MetaMask, Rabby, or any standard EVM wallet). The interface lists supported deposit assets and current yields. ;; Choose your deposit asset :: ETH, stETH, ETHx, sfrxETH and others are supported. Each has slightly different yield because of the different underlying yield sources. ;; Deposit and receive rsETH :: Approve the contract, deposit, and rsETH is minted to your wallet at the current exchange rate. The transaction usually takes one block. ;; Understand redemption :: rsETH can be swapped on DEXs (Curve, Uniswap) for instant exit, or redeemed natively through Kelp's withdrawal flow (which has a queue tied to EigenLayer's withdrawal mechanics). ;; Choose what to do with rsETH :: Hold for yield, deposit into a lending protocol as collateral, LP it on a DEX, or deposit into a Pendle yield-tokenisation strategy if you want to lock in a fixed yield." />
+
+## The Tools and Integrations
+
+Kelp DAO doesn't live alone. Its real power comes from how rsETH plugs into the rest of DeFi:
+
+<ComparisonTable
+  headers="Integration | What You Can Do | Why It Matters"
+  rows="Pendle | Lock in fixed yield by selling future rsETH yield (YT/PT splitting) | Lets you trade the yield separately from the principal — sophisticated yield management ;; Curve / Balancer | LP rsETH against ETH or other LSTs | Earn trading fees on top of restaking yield ;; Aave / Morpho / Spark | Use rsETH as collateral to borrow stablecoins | Loop rsETH for leveraged restaking exposure (and leveraged risk) ;; Karak / Symbiotic | Cross-protocol restaking on top of rsETH | Stack additional points programmes — also stacks the smart contract risk ;; L2 deployments | rsETH on Arbitrum, Optimism, Base, Linea | Cheaper transactions, broader DeFi access — but bridge risk added on top"
+/>
+
+## Flor's Take
+
+Liquid restaking is one of the most genuinely innovative things to come out of DeFi in years — and one of the easiest ways to lose money slowly, then all at once, if you don't understand the risk stack.
+
+Kelp DAO is well-built, deeply integrated, and run by a team that ships. rsETH is a useful primitive, and for users who understand exactly what they're holding, it's a reasonable position.
+
+What I'd push back on, hard, is the idea that the headline APR is the actual return. Between points uncertainty, slashing exposure, smart contract risk and depeg risk, the realised yield over a multi-year holding period is often nothing like the dashboard number. Restaking dashboards quote optimism. The market settles in pessimism.
+
+<Callout type="insight" title="The bottom line">
+Kelp DAO is one of the cleanest implementations of liquid restaking available. If you're going to participate in restaking at all, an LRT like rsETH is a more sensible exposure than DIY restaking through EigenLayer directly. But size your position based on slashing risk and points dilution — not the headline APR. The yield is real. The downside is also real.
+</Callout>
+
+For compliance professionals: get familiar with rsETH and the LRT category generally. These tokens are now common enough that not understanding them is a gap in your DeFi risk literacy. For traders and researchers: do the work, model the points realistically, and assume the worst on slashing — then decide.
+
+*Holding rsETH? Curious about a specific Kelp DAO scenario? Drop me a message.*
+
+---
+
+*This article is educational content only and does not constitute financial, legal, or investment advice. Liquid restaking carries material risk, including the loss of principal through slashing, smart contract failure, or token depeg. Always conduct your own research and consult qualified professionals before making decisions.*
