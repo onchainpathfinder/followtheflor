@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Scam flow: customer wallet → Maltese CASP (no verification) → self-hosted Tron wallet (scammer)</title>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0510"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+    <filter id="g" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff2db7"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ff3b3b"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="600" fill="url(#bg)"/>
+
+  <!-- Background grid -->
+  <g stroke="#ff2db7" stroke-width="0.3" opacity="0.06">
+    <line x1="0"   y1="100" x2="1600" y2="100"/>
+    <line x1="0"   y1="200" x2="1600" y2="200"/>
+    <line x1="0"   y1="300" x2="1600" y2="300"/>
+    <line x1="0"   y1="400" x2="1600" y2="400"/>
+    <line x1="0"   y1="500" x2="1600" y2="500"/>
+    <line x1="200" y1="0"   x2="200"  y2="600"/>
+    <line x1="400" y1="0"   x2="400"  y2="600"/>
+    <line x1="600" y1="0"   x2="600"  y2="600"/>
+    <line x1="800" y1="0"   x2="800"  y2="600"/>
+    <line x1="1000" y1="0"  x2="1000" y2="600"/>
+    <line x1="1200" y1="0"  x2="1200" y2="600"/>
+    <line x1="1400" y1="0"  x2="1400" y2="600"/>
+  </g>
+
+  <!-- Title -->
+  <text x="800" y="55" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="2">THE TRANSFER PATH</text>
+  <text x="800" y="80" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#00f0ff" opacity="0.8">January 2025 · two USDT transfers · both > €1,000</text>
+
+  <!-- ======== BOX 1: CUSTOMER WALLET ======== -->
+  <g>
+    <rect x="80" y="220" width="360" height="200" rx="8" fill="#0a0510" stroke="#ff2db7" stroke-width="2" filter="url(#g)"/>
+    <text x="260" y="260" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="18" font-weight="600" fill="#ffffff">CUSTOMER WALLET</text>
+    <text x="260" y="290" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#a0aec0">Malta-based retail user</text>
+
+    <!-- wallet icon -->
+    <rect x="220" y="320" width="80" height="55" rx="4" fill="none" stroke="#ff2db7" stroke-width="1.5"/>
+    <rect x="270" y="340" width="22" height="14" rx="2" fill="#ff2db7"/>
+    <text x="260" y="400" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#6b7280">USDT · TRC-20</text>
+  </g>
+
+  <!-- Arrow 1: customer → CASP -->
+  <line x1="450" y1="300" x2="600" y2="300" stroke="#ff2db7" stroke-width="2" marker-end="url(#arrow)" filter="url(#g)"/>
+  <text x="525" y="285" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#ff2db7">deposit</text>
+
+  <!-- ======== BOX 2: CASP ======== -->
+  <g>
+    <rect x="610" y="180" width="380" height="280" rx="8" fill="#1a0510" stroke="#ff2db7" stroke-width="2" filter="url(#g)"/>
+    <text x="800" y="220" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" fill="#ffffff">MALTESE CASP</text>
+    <text x="800" y="245" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#a0aec0">VFA / MiCA-licensed</text>
+
+    <!-- The tick-box flow inside -->
+    <rect x="660" y="280" width="280" height="100" rx="6" fill="#000000" stroke="#ff3b3b" stroke-width="1.5" opacity="0.95"/>
+    <text x="800" y="310" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ff3b3b" font-weight="600">SELF-DECLARATION FORM</text>
+
+    <!-- checked box -->
+    <rect x="690" y="330" width="22" height="22" rx="3" fill="none" stroke="#ff3b3b" stroke-width="2"/>
+    <path d="M 694 343 L 700 349 L 708 335" fill="none" stroke="#ff3b3b" stroke-width="2.5"/>
+    <text x="725" y="347" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" fill="#f5f5f5">"I own this wallet"</text>
+
+    <!-- red stamp -->
+    <g transform="rotate(-12 800 420)">
+      <rect x="700" y="395" width="200" height="42" rx="4" fill="none" stroke="#ff3b3b" stroke-width="2.5" filter="url(#g)"/>
+      <text x="800" y="423" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700" fill="#ff3b3b" letter-spacing="2">NO VERIFICATION</text>
+    </g>
+  </g>
+
+  <!-- Arrow 2: CASP → scammer wallet -->
+  <line x1="1000" y1="300" x2="1150" y2="300" stroke="#ff2db7" stroke-width="2" marker-end="url(#arrow)" filter="url(#g)"/>
+  <text x="1075" y="285" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#ff2db7">withdraw</text>
+  <text x="1075" y="325" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6b7280">unverified</text>
+
+  <!-- ======== BOX 3: SCAMMER WALLET ======== -->
+  <g>
+    <rect x="1160" y="220" width="380" height="200" rx="8" fill="#1a0510" stroke="#ff3b3b" stroke-width="2" filter="url(#g)"/>
+    <text x="1350" y="260" text-anchor="middle" font-family="'Space Grotesk', sans-serif" font-size="18" font-weight="600" fill="#ffffff">SELF-HOSTED WALLET</text>
+    <text x="1350" y="285" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="12" fill="#a0aec0">controlled by scammer</text>
+
+    <!-- skull icon (simplified) -->
+    <g transform="translate(1310, 310)" stroke="#ff3b3b" stroke-width="2" fill="none">
+      <ellipse cx="40" cy="32" rx="32" ry="28"/>
+      <circle cx="28" cy="30" r="5" fill="#ff3b3b"/>
+      <circle cx="52" cy="30" r="5" fill="#ff3b3b"/>
+      <line x1="32" y1="48" x2="48" y2="48"/>
+    </g>
+
+    <text x="1350" y="400" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#ff3b3b">online trading scam</text>
+  </g>
+
+  <!-- Bottom annotation -->
+  <text x="800" y="535" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" fill="#a0aec0">EBA Guidelines paragraphs <tspan fill="#ff2db7" font-weight="700">83–86</tspan> required at least one verification method.</text>
+  <text x="800" y="560" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" fill="#a0aec0">None was applied. The Arbiter awarded the customer <tspan fill="#ff2db7" font-weight="700">40% of the loss</tspan>.</text>
+</svg>
